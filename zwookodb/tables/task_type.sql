@@ -1,0 +1,10 @@
+--
+-- Table structure for table `task_type`
+--
+DROP TABLE IF EXISTS `task_type`;
+CREATE TABLE `task_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) DEFAULT NULL,
+  `description` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
