@@ -24,7 +24,7 @@ $dbo = null;
 //Check account credentials
 if (($login_username == $username) && (md5($login_password) == $password)){
   $message_out .= "<span style='color:green;'>User Verified.</span><br/>";
-  $message_out .= "<a href='../'>Select This Link to Go to Main Page.</a>";  
+  $message_out .= "<a href='../'>Select This Link to Go to Main Page.</a>";
   #Create a session for the user
   $_SESSION["logged_in"] = "true";
   $accountInfo = new AccountInfo();
@@ -54,7 +54,6 @@ if (($login_username == $username) && (md5($login_password) == $password)){
 } elseif (empty($username ) && empty($password)){
   // Application Login Error
   $message_out = '<div class="alert alert-danger" role="alert">Error Occurred when attempting to login!!! Ask your application Administrator for assistance.</div>';
-  
 }else {
   $message_out = '<div class="alert alert-danger" role="alert">Unable to Verify credentials.</div>';
   $message_out .= "<a href='../'>Select This Link to Go to Main Page.</a>";
@@ -86,7 +85,6 @@ if (($login_username == $username) && (md5($login_password) == $password)){
         margin-top: 5%;
       }
     </style>
-    
   </head>
   <body onload="redirectPage();">
     <div class="main-message">
