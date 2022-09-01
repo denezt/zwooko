@@ -1,0 +1,38 @@
+<?php
+
+class DataBaseConnector
+{
+    private $dbc;
+
+    //
+    function __construct()
+    {
+        $this->dbc = $this->connect();
+    }
+
+    private function connect()
+    {
+        try {
+            $hostname = "localhost";
+            $port = "3306";
+	    // Set using setup script
+            $username = "{__USERNAME__}";
+            $password = "{__PASSWORD__}";
+            $dbname = "zwookodb";
+            $pdo = new PDO("mysql:host=$hostname;port=$port;dbname=$dbname", $username, $password);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $pdo;
+        } catch (Exception $exception) {
+            error_log("DataBaseConnector/connect: " . $exception->getMessage() . "\n" . $exception->getTraceAsString(), 0);
+            return null;
+        }
+    }
+
+    function prepare($sql, $options = [])
+    {
+        return $this->dbc->prepare($sql, $options);
+    }
+
+}
+
+?>

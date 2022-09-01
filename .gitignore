@@ -9,6 +9,7 @@ tmp/**
 temp/**
 backups/**
 zwookodb/data/**
+configuration.php
 
 # Secure scripts
-zwooko/model/database.php
+database.php

@@ -3,8 +3,6 @@ session_start();
 $logged_in = $_SESSION["logged_in"];
 $page_name = "home";
 include("model/configuration.php");
-include("model/routes.php");
-include("view/sidebar.php");
 include("view/navigator.php");
 ?>
 <!DOCTYPE html>
@@ -28,26 +26,28 @@ include("view/navigator.php");
             <div class="sidebar-heading border-bottom bg-light">
                 <a href='<?php echo $route["home"]["route"];?>'><?php echo $app["name"];?></a>
             </div>
-            <?php
-                $sidebar = new SideBar($logged_in);
-                $sidebar->getRoutesFromIndex($page_name, $route);
-            ?>
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Dashboard</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
+            </div>            
         </div>
         <!-- Page content wrapper -->
         <div id="page-content-wrapper">
-            <!-- Top navigation -->
-            <?php
-                $navigator = new Navigator($logged_in);
-                $navigator->showNavigatorFromIndex();
-            ?>
             <!-- Page content -->
-            <div class="container-fluid">
-                <h1 class="mt-4">Welcome to <?php echo $app["name"];?></h1>
-            </div>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <div class="container-fluid">
+                    <button class="btn btn-primary" id="sidebarToggle">Toggle Menu</button>                    
+                </div>                
+            </nav>
+            <h1 class="mt-4">Welcome to <?php echo $app["name"];?></h1>
         </div>
     </div>
     <!-- Bootstrap core JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS -->
     <script src="js/scripts.js"></script>
 </body>
