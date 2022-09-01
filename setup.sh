@@ -1,4 +1,5 @@
 #!/bin/bash
+# PURPOSE: script to help you setup the database script
 
 DB_TEMPL='zwooko/model/template.database.php'
 DB_SCRIPT='zwooko/model/database.php'
