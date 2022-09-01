@@ -12,3 +12,6 @@ version 0.0.1a
 ``` sh
 $ ./setup.sh
 ```
+
+@contributors:
+> AA, RJ
