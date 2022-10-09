@@ -27,7 +27,7 @@ $ ./setup.sh
       <td align="center">
         <a href="https://github.com/OMDTech">
           <img src="https://avatars.githubusercontent.com/u/56205039?v=4?s=100" width="100px;" alt=""/><br />
-          <sub><b>Abdul Aldakak</b></sub>
+          <sub><b>OMDTech</b></sub>
         </a><br />
         <a href="#question-OMDTech" title="Answering Questions">💬</a>
         <a href="https://github.com/Cyberican/zwooko/commits?author=OMDTech" title="Documentation">📖</a>
@@ -37,7 +37,7 @@ $ ./setup.sh
       <td align="center">
         <a href="https://github.com/denezt">
           <img src="https://avatars.githubusercontent.com/u/635974?v=4?s=100" width="100px;" alt=""/><br />
-          <sub><b>Richard Jackson</b></sub>
+          <sub><b>denezt</b></sub>
         </a><br />
         <a href="#question-denezt" title="Answering Questions">💬</a>
         <a href="https://github.com/Cyberican/zwooko/commits?author=denezt" title="Documentation">📖</a>
