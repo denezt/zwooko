@@ -1,4 +1,4 @@
-name: Greetings
+name: Zwooko
 
 on: [pull_request_target, issues]
 
