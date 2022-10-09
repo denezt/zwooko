@@ -1,5 +1,7 @@
 [![Zwooko](https://github.com/Cyberican/zwooko/actions/workflows/zwooko.yml/badge.svg?branch=main)](https://github.com/Cyberican/zwooko/actions/workflows/zwooko.yml)
 
+![Zwooko Logo](zwooko_logo_sample.png)
+
 # Zwooko Alpha - Zwooko Project Management
 
 # The official Demo Website
@@ -45,4 +47,3 @@ $ ./setup.sh
     </tr>
   </tbody>
 </table>
-=======
