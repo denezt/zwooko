@@ -1,3 +1,5 @@
+[![Zwooko](https://github.com/Cyberican/zwooko/actions/workflows/zwooko.yml/badge.svg?branch=main)](https://github.com/Cyberican/zwooko/actions/workflows/zwooko.yml)
+
 # Zwooko Alpha - Zwooko Project Management
 
 # The official Demo Website
