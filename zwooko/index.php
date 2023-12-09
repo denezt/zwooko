@@ -1,9 +1,13 @@
 <?php
 session_start();
 $logged_in = $_SESSION["logged_in"];
-$page_name = "home";
+$page_name =  "home";
+include("controller/PageInfo.php");
+include("controller/Router.php");
 include("model/configuration.php");
+include("model/router_list.php");
 include("view/navigator.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +16,7 @@ include("view/navigator.php");
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title><?php echo $app["name"]; ?> | <?php echo $route[$page_name]["name"];?></title>
+    <title><?php echo $config["app"]["name"]; ?> | <?php echo ucfirst($_GET["route"]); ?></title>
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="view/images/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap) -->
@@ -27,23 +31,38 @@ include("view/navigator.php");
                 <a href='<?php echo $route["home"]["route"];?>'><?php echo $app["name"];?></a>
             </div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Dashboard</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
-            </div>            
+	   <?php if ($logged_in == true){ ?>
+		<a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=dashboard">Dashboard</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=tasks">Task Management</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=shortcuts">Shortcuts</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=overview">Overview</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=events">Events</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=profile">Profile</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=status">Status</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="controller/logout_user.php">Log Out</a>
+	    <?php } else { ?>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="view/login.php">Login</a>
+	    <?php } ?>
+	    </div>
+
         </div>
         <!-- Page content wrapper -->
         <div id="page-content-wrapper">
             <!-- Page content -->
             <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
                 <div class="container-fluid">
-                    <button class="btn btn-primary" id="sidebarToggle">Toggle Menu</button>                    
-                </div>                
+                    <button class="btn btn-primary" id="sidebarToggle">Toggle Menu</button>
+                </div>
             </nav>
-            <h1 class="mt-4">Welcome to <?php echo $app["name"];?></h1>
+	    <center>
+		<center>
+			<img src=<?php echo $config["app"]["logo"]; ?> ><br>
+		<center>
+	    </center>
+		<?php
+		echo "Application: " .$_GET["route"] . "<br/>";
+		?>
+
         </div>
     </div>
     <!-- Bootstrap core JS -->

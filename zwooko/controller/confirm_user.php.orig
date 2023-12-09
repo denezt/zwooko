@@ -9,16 +9,9 @@ $password = "";
 $login_username = $_POST["name"];
 $login_password = $_POST["password"];
 
-$dbo = new DataBaseConnector();
-$query = "select * from user where name = \"$login_username\"";
+$sql = "select * from user where name = \"$login_username\"";
 
-$statement = $dbo->prepare($query);
-$statement->execute();
-
-// Fetch all rows as an associative array
-$result = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-foreach ($result as $rs){
+foreach ($dbo->query($sql) as $rs){
   $id = $rs["id"];
   $username = $rs["name"];
   $uuid = $rs["uuid"];
@@ -28,15 +21,15 @@ foreach ($result as $rs){
 
 $dbo = null;
 
-// Check account credentials
-if (($login_username == $username) && (md5($login_password) == $password)) {
+//Check account credentials
+if (($login_username == $username) && (md5($login_password) == $password)){
   $message_out .= "<span style='color:green;'>User Verified.</span><br/>";
   $message_out .= "<a href='../'>Select This Link to Go to Main Page.</a>";
-  // Create a session for the user
+  #Create a session for the user
   $_SESSION["logged_in"] = "true";
   $accountInfo = new AccountInfo();
   $accountInfo->setSessionVariables($id, $username, $uuid, $status_id);
-  switch ($debug_toggle) {
+  switch ($debug_toggle){
     case 'on':
       $message_out .= "<hr/>";
       $message_out .= "Debug On." . "<br/>";
@@ -46,7 +39,7 @@ if (($login_username == $username) && (md5($login_password) == $password)) {
       $message_out .= "Stored Pass: " . $password . "<br/>";
       break;
     default:
-      $message_out = '<div class="alert alert-success" role="alert">
+    $message_out = '<div class="alert alert-success" role="alert">
               <h4 class="alert-heading">Access Granted</h4>
                 <p>Logging user '. $login_username .' into '. $app["name"].' Application</p>
               <hr>
@@ -58,14 +51,13 @@ if (($login_username == $username) && (md5($login_password) == $password)) {
   // User Login Error
   $message_out = '<div class="alert alert-danger" role="alert">No credentials were found./div><br/>';
   $message_out .= "<a href='../'>Select This Link to Go to Main Page.</a>";
-} elseif (empty($username ) && empty($password)) {
+} elseif (empty($username ) && empty($password)){
   // Application Login Error
   $message_out = '<div class="alert alert-danger" role="alert">Error Occurred when attempting to login!!! Ask your application Administrator for assistance.</div>';
-} else {
+}else {
   $message_out = '<div class="alert alert-danger" role="alert">Unable to Verify credentials.</div>';
   $message_out .= "<a href='../'>Select This Link to Go to Main Page.</a>";
 }
-
 
 ?>
 <!DOCTYPE html>
@@ -75,7 +67,7 @@ if (($login_username == $username) && (md5($login_password) == $password)) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title><?php echo $config["app"]["name"]; ?> | Confirming Access...</title>
+    <title><?php echo $app["name"]; ?> | Confirming Access...</title>
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../view/assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap) -->

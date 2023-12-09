@@ -25,10 +25,10 @@ session_destroy();
     </script>
 </head>
 <body onload="redirectPage();">
-    <center>  
+    <center>
         <div id="message">
             <h1>Logging out of Application</h1>
-            <div class="d-flex" id="wrapper">    
+            <div class="d-flex" id="wrapper">
                 <a href="../">Click here if not redirected...</a>
             </div>
         </div>
