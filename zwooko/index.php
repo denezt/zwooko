@@ -1,7 +1,7 @@
 <?php
 session_start();
 $logged_in = $_SESSION["logged_in"];
-$page_name =  "home";
+$page_name = "home";
 include("controller/PageInfo.php");
 include("controller/Router.php");
 include("model/configuration.php");
@@ -62,7 +62,13 @@ include("view/navigator.php");
 		<?php
 		echo "Application: " .$_GET["route"] . "<br/>";
 		?>
-
+		<?php
+			$currRoute = $_GET["route"];
+			$router = new Router();
+			$route = $router->getRouter($currRoute);
+			include($config["app"][$route]);
+			// echo($config["app"][$route]);
+		?>
         </div>
     </div>
     <!-- Bootstrap core JS -->

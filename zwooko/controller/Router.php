@@ -7,23 +7,10 @@ class Router {
 	function setRouter($route){
 		echo "<>";
 	}
+
+	function getRouter($route){
+		return "$route";
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ?>

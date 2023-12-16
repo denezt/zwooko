@@ -1,6 +1,11 @@
 <?php
 session_start();
+// $_SESSION["logged_in"] = "true";
 $logged_in = $_SESSION["logged_in"];
+if ("true" == $logged_in){
+	include("add_ticket.php");
+} 
+
 ?>
 <html>
 	<head>
@@ -15,11 +20,9 @@ $logged_in = $_SESSION["logged_in"];
 	</head>
 	<body>
 		<?php
-		if ("true" == $logged_in){
-			echo "[...|...]\n";
-		} else {
+		if ($logged_in != "true"):
 			echo "<a href='view/login.php'>Login</a>";
-		}
+		endif;
 		?>
 	</body>
 </html>

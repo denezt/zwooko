@@ -17,12 +17,16 @@ class AccountInfo {
         return $_SESSION["uuid"];
     }
 
-    function getName(){
-        return $_SESSION["name"];
+    function getUsername(){
+        return $_SESSION["username"];
     }
 
-    function getUser(){
-        return $_SESSION["name"];
+    function getFirstname(){
+        return $_SESSION["fname"];
+    }
+
+    function getLastname(){
+        return $_SESSION["lname"];
     }
 
     function getStatusId(){
@@ -31,7 +35,7 @@ class AccountInfo {
 
     function setSessionVariables($id, $name, $uuid, $status_id){
         $_SESSION["id"] = $id;
-        $_SESSION["name"] = $name;
+        $_SESSION["username"] = $name;
         $_SESSION["uuid"] = $uuid;
         $_SESSION["status_id"] = $status_id;
     }

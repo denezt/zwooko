@@ -3,7 +3,7 @@ include("../model/configuration.php");
 include("../controller/LoginWidget.php");
 include("../controller/AccountInfo.php");
 $accountInfo = new AccountInfo();
-$username = $accountInfo->getUser();
+$username = $accountInfo->getUsername();
 
 ?>
 <!DOCTYPE html>
