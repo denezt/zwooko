@@ -66,7 +66,6 @@ if (($login_username == $username) && (md5($login_password) == $password)) {
   $message_out .= "<a href='../'>Select This Link to Go to Main Page.</a>";
 }
 
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -80,6 +79,7 @@ if (($login_username == $username) && (md5($login_password) == $password)) {
     <link rel="icon" type="image/x-icon" href="../view/assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap) -->
     <link href="../view/css/styles.css" rel="stylesheet" />
+    <link href="../view/css/zwooko.css" rel="stylesheet" />
     <script>
       function changePage(){
         location.replace("../");

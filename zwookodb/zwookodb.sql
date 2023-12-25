@@ -25,6 +25,8 @@ source tables/task.sql;
 -- Load All Database views
 select ("Loading Task Queue Table...") as '';
 source views/task_queue.sql;
+select ("Loading Task Count Table...") as '';
+source views/task_count.sql;
 
 -- Load all Database data
 select ("Loading Asset Data Table...") as '';

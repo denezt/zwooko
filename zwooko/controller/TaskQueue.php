@@ -8,7 +8,7 @@ class TaskQueue {
 
 	function runTaskQueue($tableData){
 		if ($this->logged_in == "true"):
-			echo "<table class='table'>";
+			echo "<table id='dashboard-table' class='table table-striped table-hover'>";
 			echo  "<thead>";
 			echo    "<tr>";
 			echo      "<th scope='col'>ID</th>";
@@ -24,12 +24,12 @@ class TaskQueue {
 				$id = 1;
 				foreach ($tableData as $items):
 					echo "<tr>";
-					echo "<td><a class='no-underline-link' href='update_task.php?task_uid=".$items['task_uuid']."'>".$id++."</a></td>";
+					echo "<td><a class='no-underline-link' href='?route=update_task&task_uid=".$items['task_uuid']."'>".$id++."</a></td>";
 					echo "<td>".$items['task_type']."</td>";
 					echo "<td>".$items['task_name']."</td>";
-					echo "<td>".$items['asset_name']."</td>";
+					echo "<td>".$items['product_name']."</td>";
 					echo "<td>".$items['description']."</td>";
-					echo "<td><a class='no-underline-link' href='update_task.php?task_uid=".$items['task_uuid']."'>". $items['task_status']."</a></td>";
+					echo "<td><a class='no-underline-link' href='?route=update_task&task_uid=".$items['task_uuid']."'>". $items['status']."</a></td>";
 					echo "</tr>";
 				endforeach;
 			else:
@@ -48,12 +48,12 @@ class TaskQueue {
 		endif;
 	}
 
-	function scanQueue($queryLimit, $dbObject, $current_user){
+	function scanQueue($queryLimit, $dbo, $current_user){
 		// echo "Query Limit: " . $queryLimit;
 		$sql = "select * from task_queue where employee = '". $current_user."' limit $queryLimit";
 		$tableData = array();
 		$item = 0;
-		foreach ($dbObject->query($sql) as $rs){
+		foreach ($dbo->query($sql) as $rs){
 			$uuid = $rs["task_uuid"];
 			$status = $rs["status"];
 			$task_type = $rs["task_type"];

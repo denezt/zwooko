@@ -1,0 +1,43 @@
+body {
+    background-color: lightgray;
+}
+
+#app-logo {
+    text-decoration: none;
+    background-color: darkgray;
+    opacity: 85%;
+}
+
+.ticket-container {
+    width: 80%;
+}
+
+#task-confirm-btn {
+    margin-top: 5%;
+}
+
+.form-header {
+    background-color: cornflowerblue;
+    opacity: 85%;
+}
+
+.form-panel {
+    border: 1px solid lightgray;
+    width: 80%;  /* Image Width */
+    height: 80%; /* Image Height */
+    display: block;
+    position: relative;
+}
+
+.form-horizontal {
+    background-color: lightgray;
+    opacity: 0.9;
+}
+
+.page-header {
+    color: red;
+}
+
+#sidebar-wrapper {
+    background-color: lightgray;
+}

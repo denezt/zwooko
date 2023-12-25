@@ -1,7 +1,7 @@
 --
 -- Temporary view structure for view `task_queue`
 --
-DROP TABLE IF EXISTS `task_queue`;
+DROP VIEW IF EXISTS `task_queue`;
 CREATE VIEW `task_queue` AS
   select `t`.`id` AS `id`,
   `t`.`uuid` AS `task_uuid`,
