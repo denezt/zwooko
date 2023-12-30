@@ -50,6 +50,7 @@ if (($login_username == $username) && (md5($login_password) == $password)) {
               <h4 class="alert-heading">Access Granted</h4>
                 <p>Logging user '. $login_username .' into '. $app["name"].' Application</p>
               <hr>
+              <div class="spinner-border text-dark" role="status"></div>
               <p class="mb-0">Private Project Management Application</p>
             </div>';
       break;
@@ -82,10 +83,10 @@ if (($login_username == $username) && (md5($login_password) == $password)) {
     <link href="../view/css/zwooko.css" rel="stylesheet" />
     <script>
       function changePage(){
-        location.replace("../");
+        location.replace("/?route=dashboard");
       }
       function redirectPage(){
-        setTimeout(changePage,1500);
+        setTimeout(changePage, 1500);
       }
     </script>
     <style>
@@ -100,10 +101,10 @@ if (($login_username == $username) && (md5($login_password) == $password)) {
         <center>
           <?php if (empty($login_username) || empty($login_password)): ?>
             <h1>Welcome to <?php echo $app["name"]; ?></h1>
-          <?php endif; ?>
-        </center>
-        <center>
-          <?php echo $message_out; ?>
+            <?php endif; ?>
+          </center>
+          <center>
+            <?php echo $message_out; ?>
         </center>
       </div>
     </div>

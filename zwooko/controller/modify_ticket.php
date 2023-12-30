@@ -1,5 +1,5 @@
 <?php
-$debug = true;
+$debug = false;
 include("../model/configuration.php");
 include("../model/database.php");
 
@@ -37,5 +37,18 @@ if ($debug){
 }
 
 ?>
-
-<a href="/?route=queue">GO to Queue</a>
+<!DOCTYPE html>
+<head>
+<script>
+      function changePage(){
+        location.replace("/?route=update_task&task_uid=<?php echo $uuid;?>");
+      }
+      function redirectPage(){
+        setTimeout(changePage,1500);
+      }
+    </script>
+</head>
+<body onload="redirectPage();">
+      <h1>Updating, issue...</h1>
+</body>
+</html>

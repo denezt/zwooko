@@ -17,7 +17,7 @@ session_destroy();
     <link href="view/css/styles.css" rel="stylesheet" />
     <script>
       function changePage(){
-        location.replace("../");
+        location.replace("../view/login.php");
       }
       function redirectPage(){
         setTimeout(changePage,1500);

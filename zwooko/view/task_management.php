@@ -18,11 +18,5 @@ if ("true" == $logged_in){
 			}
 		</style>
 	</head>
-	<body>
-		<?php
-		if ($logged_in != "true"):
-			echo "<a href='view/login.php'>Login</a>";
-		endif;
-		?>
-	</body>
+	<body></body>
 </html>

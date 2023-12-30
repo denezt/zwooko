@@ -6,16 +6,38 @@ class TaskQueue {
 		$this->logged_in = $logged_in;
 	}
 
+	function getArchiveData($dbo){
+		$sql = "SELECT * FROM task_accomplished limit 10";
+		$query_result = $dbo->prepare($sql);
+		$query_result->execute();
+		return $query_result->fetchAll();
+	}
+
+	function getQueueData($dbo){
+		$sql = "SELECT * FROM task_queue limit 10";
+		$query_result = $dbo->prepare($sql);
+		$query_result->execute();
+		return $query_result->fetchAll();
+	}
+
+	function limitStringLength($inputStr){
+		if (strlen($inputStr) > 52){
+			$strResult = substr($inputStr, 0, 254) . '...';
+		} else {
+			$strResult = $inputStr;
+		}
+		return $strResult;
+	}
+
 	function runTaskQueue($tableData){
 		if ($this->logged_in == "true"):
-			echo "<table id='dashboard-table' class='table table-striped table-hover'>";
+			echo  "<table id='dashboard-table' class='table table-striped table-hover'>";
 			echo  "<thead>";
 			echo    "<tr>";
 			echo      "<th scope='col'>ID</th>";
 			echo      "<th scope='col'>Task Type</th>";
 			echo      "<th scope='col'>Name</th>";
 			echo      "<th scope='col'>Product</th>";
-			echo      "<th scope='col'>Description</th>";
 			echo      "<th scope='col'>Task Status</th>";
 			echo    "</tr>";
 			echo  "</thead>";
@@ -26,25 +48,20 @@ class TaskQueue {
 					echo "<tr>";
 					echo "<td><a class='no-underline-link' href='?route=update_task&task_uid=".$items['task_uuid']."'>".$id++."</a></td>";
 					echo "<td>".$items['task_type']."</td>";
-					echo "<td>".$items['task_name']."</td>";
+					echo "<td>". $this->limitStringLength($items['task_name']) ."</td>";
 					echo "<td>".$items['product_name']."</td>";
-					echo "<td>".$items['description']."</td>";
 					echo "<td><a class='no-underline-link' href='?route=update_task&task_uid=".$items['task_uuid']."'>". $items['status']."</a></td>";
 					echo "</tr>";
 				endforeach;
 			else:
 				echo "<tr>";
-				// echo "<td colspan=5 style='background-color:lightgray;'><center><span style='color:gray;'>No Data</span></center></td>";
-				for ($i=0; $i < 5; $i++){
+				for ($i=0; $i < 6; $i++){
 					echo "<td style='background-color:lightgray;'><span style='color:gray;'>No Data</span></td>";
 				}
 				echo "</tr>";
 			endif;
-
 			echo "</tbody>";
 			echo "</table>";
-		else:
-			echo "<a href='../index.php'>User is not logged In</a>";
 		endif;
 	}
 
@@ -72,6 +89,5 @@ class TaskQueue {
 		return $tableData;
 	}
 }
-
 
 ?>

@@ -1,5 +1,4 @@
 <?php
-
 // Load the Database Object code
 include("model/database.php");
 $dbo = new DataBaseConnector();
@@ -16,9 +15,10 @@ $taskTableData = $taskInfo->getTaskTableData();
 include("controller/AccountInfo.php");
 $accountInfo = new AccountInfo();
 $username = $accountInfo->getUsername();
+$is_logged_in = (!empty($username)) ? true : false;
 
 ?>
-<?php if ($uuid): ?>
+<?php if ($uuid && $is_logged_in): ?>
 <div class="ticket-container">
     <form method="get" action="controller/modify_ticket.php">
         <!-- User ID Information -->

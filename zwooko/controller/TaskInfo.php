@@ -8,6 +8,7 @@ class TaskInfo {
     private $status_id;
     private $asset_id;
     private $user_id;
+    private $priority;
 
     /**
      * All Task Info is extracted using Unique Identification Number
@@ -50,6 +51,10 @@ class TaskInfo {
 
     function getTaskUserId(){
         return "$this->user_id";
+    }
+
+    function getTaskPriority(){
+        return "$this->priority";
     }
 
     // Extract all task information and store

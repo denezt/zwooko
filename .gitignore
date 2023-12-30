@@ -10,6 +10,8 @@ temp/**
 backups/**
 zwookodb/data/**
 configuration.php
+tools/generate_user_password.sh
+.vscode/**
 
 # Secure scripts
 database.php

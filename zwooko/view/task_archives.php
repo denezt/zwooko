@@ -7,7 +7,7 @@ include("controller/TaskQueue.php");
 
 $dbo = new DataBaseConnector();
 $taskQueue = new TaskQueue($logged_in);
-$tableData = $taskQueue->getQueueData($dbo);
+$tableData = $taskQueue->getArchiveData($dbo);
 echo $taskQueue->runTaskQueue($tableData);
 
 ?>

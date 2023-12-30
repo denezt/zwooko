@@ -17,6 +17,8 @@ select ("Loading User Status Table...") as '';
 source tables/user_status.sql;
 select ("Loading User Table...") as '';
 source tables/user.sql;
+select ("Loading Task Priority Table...") as '';
+source tables/task_priority.sql;
 select ("Loading Task Status Table...") as '';
 source tables/task_status.sql;
 select ("Loading Task Table...") as '';
@@ -27,6 +29,8 @@ select ("Loading Task Queue Table...") as '';
 source views/task_queue.sql;
 select ("Loading Task Count Table...") as '';
 source views/task_count.sql;
+select ("Loading Task Accomplished Table...") as '';
+source task_accomplished.sql;
 
 -- Load all Database data
 select ("Loading Asset Data Table...") as '';

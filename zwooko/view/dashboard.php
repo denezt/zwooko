@@ -34,9 +34,6 @@ include("./controller/dashboard_data.php");
 				echo 	"</tr>";
 			}
 			echo "</table>";
-
-		} else {
-			echo "<a href='view/login.php'>Login</a>";
 		}
 		?>
 	</body>
