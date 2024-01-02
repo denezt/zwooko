@@ -26,9 +26,6 @@ $type_id = $_GET["task_type"];
 $uuid = $_GET["task_id"];
 $task_comment = $_GET["task_comment"];
 $status_id = $_GET["status"];
-    
-echo "<h1>Running</h1>";
-
 // Extract User ID from Database
 // Save task to database
 modifyInfo($dbo, $user_id, $summary, $type_id, $task_comment, $status_id, 1, $uuid);

@@ -15,15 +15,22 @@ $username = $accountInfo->getUsername();
 	body {
 		background-image: url("../images/zwooko_logo_0002.png");
 		background-size: cover; /* This will ensure that the image covers the whole area */
-		background-repeat: no-repeat; /* This will prevent the image from repeating */
+		background-repeat: no-repeat;
 		background-position: center center; /* This will center the image */
 	}
 	#login-container {
-		margin-top: 10%;
+		margin-top: 5%;
 		margin-left: 10%;
 		margin-right: 10%;
   		height: 100vh; /* Adjust as needed */
 		width: 90%;
+	}
+	.inner-container {
+		background: rgba(255, 255, 255, 0.5);;
+		margin-top: 15%;
+		margin-left: 0%;
+		margin-right: 10%;
+		border-radius: 10px 10px 10px 10px;
 	}
     </style>
 </head>
@@ -33,13 +40,23 @@ $username = $accountInfo->getUsername();
 		<?php loadLoginWidget(); ?>
 	</div>
 	<?php } else { ?>
-		<div class="card">
-			<div class="card-body">
-				<?php echo "Welcome Back: <b>". ucfirst($username) ."</b><br/>"; ?>
-			</div>
-		</div>
 		<center>
-			<a class="btn btn-primary" href="../" role="button">Navigate to Main</a>
+			<div id="login-container">
+				<div class="inner-container">
+					<h2 style="color: darkblue;"><?php echo "Welcome Back: <b>". ucfirst($username) ."</b>"; ?></h2>
+					<table>
+						<tr>
+							<td><a class="btn btn-primary" href="/?route=dashboard" role="button">Navigate to Main</a></td>
+						</tr>
+						<tr>
+							<td><a class="btn btn-primary" href="../controller/logout_user.php" role="button">Logout</a></td>
+						</tr>
+						<tr>
+							<td>Zwooko&trade; <?php echo Date("Y"); ?></td>
+						</tr>
+					</table>
+				</div>
+			</div>
 		</center>
 	<?php } ?>
 </body>

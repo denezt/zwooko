@@ -19,5 +19,5 @@ CREATE VIEW `task_accomplished` AS
     join `asset` `a` on((`a`.`id` = `t`.`asset_id`)))
     join `task_status` `ts` on((`ts`.`id` = `t`.`status_id`)))
     join `task_type` `tt` on((`tt`.`id` = `t`.`type_id`)))
-  where (`ts`.`id` = 3) order by `t`.`id`;
+  where (`ts`.`id` = 3) order by `t`.`id` desc limit 10;
 

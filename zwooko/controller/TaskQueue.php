@@ -13,6 +13,14 @@ class TaskQueue {
 		return $query_result->fetchAll();
 	}
 
+	function searchArchiveData($dbo, $term){
+		$sql = "SELECT * FROM task_accomplished where lower(description) like :search_term or lower(task_name) like :search_term";
+		$query_result = $dbo->prepare($sql);
+		// $statement = $pdo->prepare("SELECT * FROM users WHERE vorname LIKE :vorname");
+		$query_result->execute(array('search_term' => "%$term%"));
+		return $query_result->fetchAll();
+	}
+
 	function getQueueData($dbo){
 		$sql = "SELECT * FROM task_queue limit 10";
 		$query_result = $dbo->prepare($sql);

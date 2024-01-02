@@ -40,7 +40,8 @@ $route = (ucfirst($_GET["route"])) ? ucfirst($_GET["route"]) : "Main";
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=dashboard">Dashboard</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=tasks">Task Management</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=queue">Queue</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=archives">Archived</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=archives">Recently Archived</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=search_archives">Search Archives</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=profile">Profile</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="controller/logout_user.php">Log Out</a>
                 <?php } else { ?>
@@ -59,7 +60,12 @@ $route = (ucfirst($_GET["route"])) ? ucfirst($_GET["route"]) : "Main";
             <!-- sidebar route container -->
             <center>
                     <img id="app-logo-img" src=<?php echo $config["app"]["logo"]; ?>><br/>
-                    <h5><?php echo "Application: " . $route . "<br/>"; ?></h5>
+                    <h5>
+                    <?php
+                        $_route = explode("_", $route);
+                        $_route = implode(" ", $_route);
+                        echo "Application: " . $_route . "<br/>"; 
+                    ?></h5>
                     <?php if ($logged_in == false){ ?>
                         <button type="button" onClick="openLoginScreen();" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">Log into Server</button>
                     <?php } ?>
