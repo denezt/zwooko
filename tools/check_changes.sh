@@ -11,14 +11,18 @@ query_content(){
 
 get_untracked_files(){
 	search_term=${1}
-	for f in $(git status --untracked-files --short | awk '{print $2}');
-	do
-		if [ -e "${f}" ];
-		then
-			printf "$f\n";
-			query_content "${search_term}" "${f}"
-		fi
-	done
+	_count=($(for c in $(git status --untracked-files --short | awk '{print $2}'); do printf "$c ";done))
+	if [ ${#_count[*]} -ge 1 ];
+	then
+		for f in $(git status --untracked-files --short | awk '{print $2}');
+		do
+			if [ -e "${f}" ];
+			then
+				printf "$f\n";
+				query_content "${search_term}" "${f}"
+			fi
+		done
+	fi
 }
 
 extract_value(){
