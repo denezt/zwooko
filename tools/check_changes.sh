@@ -22,6 +22,8 @@ get_untracked_files(){
 				query_content "${search_term}" "${f}"
 			fi
 		done
+	else
+		printf "\033[33mNo Files were modifying.\033[0m\n"
 	fi
 }
 
