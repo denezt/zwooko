@@ -6,6 +6,9 @@ include("model/database.php");
 // Create the PDO
 $dbo = new DataBaseConnector();
 
+include("controller/Asset.php"); 
+$asset = new Asset($dbo);
+
 // Load the AccountInfo Object code
 include("controller/AccountInfo.php");
 $accountInfo = new AccountInfo();
@@ -26,6 +29,20 @@ $username = $accountInfo->getUsername();
   			<input name="username" type="text" class="form-control" placeholder="Username" aria-label="Recipient's username" aria-describedby="basic-addon2" value=<?php echo $username; ?> readonly>
 		</div>
 
+		<!-- Product -->
+		<div class="mb-3">
+			<div class="input-group">
+				<span class="input-group-text">Product:</span>
+				<select name="product" class="form-select" aria-label="Default select example">
+				<?php
+					foreach ($asset->getAssetName() as $val){
+						echo "<option value='". $val['id']. "'>".$val['name']."</option>";
+					}	
+				?>
+				</select>
+			</div>
+		</div>
+
 		<!-- Status -->
 		<div class="mb-3">
  			<div class="input-group">
@@ -41,15 +58,15 @@ $username = $accountInfo->getUsername();
 					}
 				?>
 				</select>
-
   			</div>
-  			<div class="form-text" id="basic-addon4">Select Task Status</div>
 		</div>		
 	
 		<!-- Summary -->
-		<div class="input-group mb-3">
-  			<span class="input-group-text" id="basic-addon2">Summary:</span>
-  			<input name="summary" type="text" class="form-control" placeholder="Summary" aria-label="Task Summary" aria-describedby="basic-addon2">
+		<div class="mb-3">
+			<div class="input-group mb-3">
+				<span class="input-group-text" id="basic-addon2">Summary:</span>
+				<input name="summary" type="text" class="form-control" placeholder="Summary" aria-label="Task Summary" aria-describedby="basic-addon2">
+			</div>
 		</div>
 
 		<!-- Task Type -->
@@ -69,7 +86,6 @@ $username = $accountInfo->getUsername();
 					?>
 				</select>
   			</div>
-  			<div class="form-text" id="basic-addon4">Select Task Type</div>
 		</div>
 
        		<!-- Task Priority -->
@@ -89,7 +105,6 @@ $username = $accountInfo->getUsername();
 										?>
                                 </select>
                         </div>
-                        <div class="form-text" id="basic-addon4">Select Priority</div>
                 </div>
 		<!-- Task Comments -->
 		<div class="input-group">

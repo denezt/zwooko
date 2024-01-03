@@ -63,7 +63,7 @@ class TaskQueue {
 				endforeach;
 			else:
 				echo "<tr>";
-				for ($i=0; $i < 6; $i++){
+				for ($i=0; $i < 5; $i++){
 					echo "<td style='background-color:lightgray;'><span style='color:gray;'>No Data</span></td>";
 				}
 				echo "</tr>";

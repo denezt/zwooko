@@ -10,10 +10,9 @@ $login_username = $_POST["name"];
 $login_password = $_POST["password"];
 
 $dbo = new DataBaseConnector();
-$query = "select * from user where name = \"$login_username\"";
-
+$query = "select * from user where name = ?";
 $statement = $dbo->prepare($query);
-$statement->execute();
+$statement->execute([$login_username]);
 
 // Fetch all rows as an associative array
 $result = $statement->fetchAll(PDO::FETCH_ASSOC);

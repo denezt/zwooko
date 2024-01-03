@@ -49,9 +49,6 @@ $username = $accountInfo->getUsername();
 							<td><a class="btn btn-primary" href="/?route=dashboard" role="button">Navigate to Main</a></td>
 						</tr>
 						<tr>
-							<td><a class="btn btn-primary" href="../controller/logout_user.php" role="button">Logout</a></td>
-						</tr>
-						<tr>
 							<td>Zwooko&trade; <?php echo Date("Y"); ?></td>
 						</tr>
 					</table>

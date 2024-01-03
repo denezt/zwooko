@@ -6,6 +6,8 @@ DROP TABLE IF EXISTS `task`;
 CREATE TABLE `task` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(512) DEFAULT NULL,
+  `created_on` DATETIME default CURRENT_TIMESTAMP,
+  `modified_on` DATETIME default CURRENT_TIMESTAMP,
   `type_id` int DEFAULT NULL,
   `uuid` varchar(48) DEFAULT NULL,
   `description` text,

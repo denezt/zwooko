@@ -9,13 +9,11 @@ class Asset {
     }
 
     function getAssetName(){
-        $task_name = "";
         $sql = "select * from asset";
-        $i = 0;
-        foreach ($this->dbObject->query($sql) as $rs){
-            $name[$i++] = $rs["name"];
-        }
-       return $name;
+        $dbo = $this->dbObject;
+		$query_result = $dbo->prepare($sql);
+		$query_result->execute();
+		return $query_result->fetchAll();
     }
 }
 

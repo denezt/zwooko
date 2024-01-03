@@ -6,6 +6,11 @@ class LogManager {
 		$this->logged_in = $logged_in;
 	}
 
+	function addLogEntry($dbo, $entry){
+		
+		$query_result->execute(array('search_term' => "%$term%"));
+	}
+
     
 
 }

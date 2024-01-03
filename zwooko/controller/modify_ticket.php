@@ -4,11 +4,15 @@ include("../model/configuration.php");
 include("../model/database.php");
 
 function modifyInfo($dbo, $user_id, $summary, $type_id, $task_comment, $status_id, $asset_id, $uuid){
+  // Get system time
+  $timestamp = time();
+  // Convert Unix timestamp to date and time
+  $date = date("Y-m-d H:i:s", $timestamp);
   $commentArr = explode(" ", $task_comment);
-  $task_comment = (count($commentArr) < 2) ? "empty" : $task_comment;
-  $sql = "update `task` set `user_id` = ?, `name` = ?, `type_id` = ?, `description` = ?, `status_id` = ?, `asset_id` = ? where `uuid` = ?";
+  $task_comment = (count($commentArr) < 1) ? "empty" : $task_comment;
+  $sql = "update `task` set `user_id` = ?, `name` = ?, `type_id` = ?, `description` = ?, `status_id` = ?, `asset_id` = ?, `modified_on` = ? where `uuid` = ?";
   $stmt = $dbo->prepare($sql);
-  $stmt->execute([$user_id, $summary, $type_id, $task_comment, $status_id, $asset_id, $uuid]);
+  $stmt->execute([$user_id, $summary, $type_id, $task_comment, $status_id, $asset_id, $date, $uuid]);
 }
   
 function getUserId($dbo, $username){

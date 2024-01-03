@@ -4,10 +4,10 @@ $dbo = new DataBaseConnector();
 
 function getTaskNameList($dbo){
 	$sql = "SELECT name FROM `task_type`";
-        // echo "Loading, mySQL statement " . $sql . "<br/>";
-        $stmt = $dbo->prepare($sql);
- 	$stmt->execute();
-    	$results = $stmt->fetchAll();
+	// echo "Loading, mySQL statement " . $sql . "<br/>";
+	$stmt = $dbo->prepare($sql);
+	$stmt->execute();
+	$results = $stmt->fetchAll();
 	return $results;
 }
 

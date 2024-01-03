@@ -3,12 +3,12 @@ $debug = false;
 include("../model/configuration.php");
 include("../model/database.php");
 
-function saveInfo($dbo, $user_id, $summary, $task_type, $task_id, $task_comment, $status_id, $asset_id){
+function saveInfo($dbo, $user_id, $summary, $task_type, $task_id, $task_comment, $status_id, $asset_id, $priority_id){
   $commentArr = explode(" ",$task_comment);
-  $task_comment = (count($commentArr) < 2) ? "empty" : $task_comment;
-  $sql = "INSERT INTO `task` (`name`, `type_id`, `uuid`, `description`, `status_id`, `asset_id`, `user_id`) VALUES ('".$summary."',$task_type, '".$task_id."','".$task_comment."', $status_id, $asset_id, $user_id)";
+  $task_comment = (count($commentArr) < 1) ? "empty" : $task_comment;
+  $sql = "INSERT INTO `task` (`name`, `type_id`, `uuid`, `description`, `status_id`, `asset_id`, `user_id`, `priority_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
   $stmt = $dbo->prepare($sql);
-  $stmt->execute();
+  $stmt->execute([$summary, $task_type, $task_id, "$task_comment", $status_id, $asset_id, $user_id, $priority_id]);
 }
 
 function getUserId($dbo, $username){
@@ -25,11 +25,13 @@ $summary = $_GET["summary"];
 $task_type = $_GET["task_type"];
 $task_id = $_GET["task_id"];
 $task_comment = $_GET["task_comment"];
+$task_priority = $_GET["task_priority"];
 $status_id = $_GET["status"];
+$product_id = $_GET["product"];
 
 // Extract User ID from Database
 // Save task to database
-saveInfo($dbo, $user_id, $summary, $task_type, $task_id, $task_comment, $status_id, 1);
+saveInfo($dbo, $user_id, $summary, $task_type, $task_id, $task_comment, $status_id, $product_id, $task_priority);
 if ($debug){
         echo var_dump($_GET);
 } 
