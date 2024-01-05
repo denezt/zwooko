@@ -1,14 +1,14 @@
 <?php
 
 class TaskInfo {
+    private $uuid;
     private $name;
     private $type_id;
-    private $uuid;
     private $description;
     private $status_id;
     private $asset_id;
     private $user_id;
-    private $priority;
+    private $priority_id;
 
     /**
      * All Task Info is extracted using Unique Identification Number
@@ -19,13 +19,14 @@ class TaskInfo {
     }
 
     // Here we set all of the class variables
-    function setTaskInfo($name, $type_id, $description, $status_id, $asset_id, $user_id){
+    function setTaskInfo($name, $type_id, $description, $status_id, $asset_id, $user_id, $priority_id){
         $this->name = $name;
         $this->type_id = $type_id;
         $this->description = $description;
         $this->status_id = $status_id;
         $this->asset_id = $asset_id;
         $this->user_id = $user_id;
+        $this->priority_id = $priority_id;
     }
 
     function getTaskName(){
@@ -64,14 +65,15 @@ class TaskInfo {
         $query->execute([$this->uuid]);
         $query_result = $query->fetchAll();
         foreach ($query_result as &$rs){
-            $task_name = $rs["name"];
-            $description = $rs["description"];
-            $type_id = $rs["type_id"];
-            $status_id = $rs["status_id"];
-            $asset_id = $rs["asset_id"];
-            $user_id = $rs["user_id"];
+            $task_name = $rs["name"];           // Name
+            $description = $rs["description"];  // Description
+            $type_id = $rs["type_id"];          // Type ID
+            $status_id = $rs["status_id"];      // Status ID
+            $asset_id = $rs["asset_id"];        // Asset ID
+            $user_id = $rs["user_id"];          // User ID
+            $priority_id = $rs["priority_id"];  // Priority ID
         }
-        $this->setTaskInfo($task_name, $type_id, $description, $status_id, $asset_id, $user_id);
+        $this->setTaskInfo($task_name, $type_id, $description, $status_id, $asset_id, $user_id, $priority_id);
     }
 
     function getTaskTableData(){
@@ -82,6 +84,7 @@ class TaskInfo {
         $status_id =  $this->status_id;
         $asset_id = $this->asset_id;
         $user_id = $this->user_id;
+        $priority_id = $this->priority_id;
         $tableData = array(
             "task_name" => $task_name,
             "type_id" => $type_id,
@@ -89,7 +92,8 @@ class TaskInfo {
             "description" => $description,
             "status_id" =>  $status_id,
             "asset_id" => $asset_id,
-            "user_id" => $user_id
+            "user_id" => $user_id,
+            "priority_id" => $priority_id
         );
         return $tableData;
     }

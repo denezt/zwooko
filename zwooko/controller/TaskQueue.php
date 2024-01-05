@@ -58,7 +58,9 @@ class TaskQueue {
 					echo "<td>".$items['task_type']."</td>";
 					echo "<td>". $this->limitStringLength($items['task_name']) ."</td>";
 					echo "<td>".$items['product_name']."</td>";
-					echo "<td><a class='no-underline-link' href='?route=update_task&task_uid=".$items['task_uuid']."'>". $items['status']."</a></td>";
+					$features = "<a href='/?route=archiver&task_id=".$items['task_uuid']."'><i class='bi bi-archive'></i></a>&nbsp;";
+					$features .= "<a href='/?route=delete&task_id=".$items['task_uuid']."'><i class='bi bi-trash'></i></a>";
+					echo "<td><a class='no-underline-link' href='?route=update_task&task_uid=".$items['task_uuid']."'>". $items['status']."</a>&nbsp;$features</td>";
 					echo "</tr>";
 				endforeach;
 			else:
@@ -74,7 +76,6 @@ class TaskQueue {
 	}
 
 	function scanQueue($queryLimit, $dbo, $current_user){
-		// echo "Query Limit: " . $queryLimit;
 		$sql = "select * from task_queue where employee = '". $current_user."' limit $queryLimit";
 		$tableData = array();
 		$item = 0;

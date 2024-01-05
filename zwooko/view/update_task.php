@@ -10,15 +10,14 @@ $taskInfo = new TaskInfo($uuid);
 $taskInfo->extractTaskTableData($dbo);
 $taskTableData = $taskInfo->getTaskTableData();
 
-// Create the PDO
 // Load the AccountInfo Object code
 include("controller/AccountInfo.php");
 $accountInfo = new AccountInfo();
 $username = $accountInfo->getUsername();
 $is_logged_in = (!empty($username)) ? true : false;
-
+$is_uuid_present = (!empty($uuid)) ? true : false;
 ?>
-<?php if ($uuid && $is_logged_in): ?>
+<?php if ($is_uuid_present && $is_logged_in): ?>
 <div class="ticket-container">
     <form method="get" action="controller/modify_ticket.php">
         <!-- User ID Information -->
@@ -34,6 +33,25 @@ $is_logged_in = (!empty($username)) ? true : false;
             <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Recipient's username" 
             aria-describedby="basic-addon2" value=<?php echo $username; ?> readonly>
         </div>
+
+        <!-- Product -->
+		<div class="mb-3">
+			<div class="input-group">
+				<span class="input-group-text">Product:</span>
+				<select name="product" class="form-select" aria-label="Default select example">
+				<?php
+                    include("task_assets.php");
+                    $currentAsset = $taskInfo->getTaskAssetId();
+                    $task_asset = getTaskAssetsId($dbo);
+                    $row_limit = count($task_asset);
+                    for ($row = 0; $row < $row_limit; $row++) {
+                        $selected = ($task_asset[$row][0] == $currentAsset) ? "selected" : " ";
+                        echo "<option value='". $task_asset[$row][0] ."' $selected>". $task_asset[$row][1] ."</option>\n";
+                    }
+				?>
+				</select>
+			</div>
+		</div>
 
         <!-- Status -->
         <div class="mb-3">
@@ -51,9 +69,7 @@ $is_logged_in = (!empty($username)) ? true : false;
                     }
                 ?>
                 </select>
-
             </div>
-            <div class="form-text" id="basic-addon4">Select Task Status</div>
         </div>		
     
         <!-- Summary -->
@@ -82,7 +98,6 @@ $is_logged_in = (!empty($username)) ? true : false;
                     ?>
                 </select>
             </div>
-            <div class="form-text" id="basic-addon4">Select Task Type</div>
         </div>
 
             <!-- Task Priority -->
@@ -102,7 +117,6 @@ $is_logged_in = (!empty($username)) ? true : false;
                                         ?>
                                 </select>
                         </div>
-                        <div class="form-text" id="basic-addon4">Select Priority</div>
                 </div>
         <!-- Task Comments -->
         <div class="input-group">

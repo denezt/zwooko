@@ -1,6 +1,8 @@
 <?php 
 session_start();
 $logged_in = $_SESSION["logged_in"];
+include("controller/AccountInfo.php");
+$accountInfo = new AccountInfo();
 
 include("model/database.php");
 include("controller/TaskQueue.php");
@@ -26,6 +28,7 @@ $taskQueue = new TaskQueue($logged_in);
 		</style>
 	</head>
     <body>
+        <?php if ($accountInfo->getSessionState()): ?>
         <div class="search-archives">
             <form method="get" action="/">
                 <input type="hidden" name="route" value="search_archives">
@@ -40,7 +43,7 @@ $taskQueue = new TaskQueue($logged_in);
             echo $taskQueue->runTaskQueue($tableData);
             $dbo->close();
         ?>            
-
+        <?php endif; ?>
     </body>
 </html>
 
