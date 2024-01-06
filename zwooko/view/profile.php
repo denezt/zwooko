@@ -15,6 +15,7 @@ $userid = $accountInfo->getId();
         </style>
     </head>
     <body>
+        <?php if ($accountInfo->getSessionState()): ?>
         <div class="div-beautifier shadow-lg col-md-3">
             <div class="text-center border-end">
                 <img src="../images/zwooko_logo_0002.png" class="img-fluid avatar-xxl rounded-circle" alt="">
@@ -22,5 +23,6 @@ $userid = $accountInfo->getId();
                 <h5 class="text-muted font-size-13 mb-0">UserID: <?php echo $userid; ?></h5>
             </div>
         </div><!-- end col -->
+        <?php endif; ?>
     </body>
 </html>
