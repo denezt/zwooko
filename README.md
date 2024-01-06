@@ -5,10 +5,10 @@
 # Zwooko Alpha - Zwooko Project Management
 
 # The official Demo Website
-[Zwooko Website: https://www.zwooko.com ](https://www.zwooko.com)
+[Zwooko Website: https://www.zwooko.com ](https://www.zwooko.com/login.php)
 
 ## This is Repository will maintain the Project Management Software.
-version 0.0.1a
+version 1.0.0
 
 ### Requirements
 * Ubuntu Linux Distro 18.10 or higher, preferable 20.10
