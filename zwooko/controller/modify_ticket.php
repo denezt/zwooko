@@ -3,16 +3,16 @@ $debug = false;
 include("../model/configuration.php");
 include("../model/database.php");
 
-function modifyInfo($dbo, $user_id, $summary, $type_id, $task_comment, $status_id, $asset_id, $uuid){
+function modifyInfo($dbo, $user_id, $summary, $type_id, $task_comment, $status_id, $asset_id, $assignee_id, $uuid){
   // Get system time
   $timestamp = time();
   // Convert Unix timestamp to date and time
   $date = date("Y-m-d H:i:s", $timestamp);
   $commentArr = explode(" ", $task_comment);
   $task_comment = (count($commentArr) < 1) ? "empty" : $task_comment;
-  $sql = "update `task` set `user_id` = ?, `name` = ?, `type_id` = ?, `description` = ?, `status_id` = ?, `asset_id` = ?, `modified_on` = ? where `uuid` = ?";
+  $sql = "update `task` set `user_id` = ?, `name` = ?, `type_id` = ?, `description` = ?, `status_id` = ?, `asset_id` = ?, `modified_on` = ?, `assignee_id` = ? where `uuid` = ?";
   $stmt = $dbo->prepare($sql);
-  $stmt->execute([$user_id, $summary, $type_id, $task_comment, $status_id, $asset_id, $date, $uuid]);
+  $stmt->execute([$user_id, $summary, $type_id, $task_comment, $status_id, $asset_id, $date, $assignee_id, $uuid]);
 }
   
 function getUserId($dbo, $username){
@@ -31,10 +31,11 @@ $uuid = $_GET["task_id"];
 $task_comment = $_GET["task_comment"];
 $status_id = $_GET["status"];
 $asset_id = $_GET["product"];
+$assignee_id = $_GET["assignee_id"];
 
 // Extract User ID from Database
 // Save task to database
-modifyInfo($dbo, $user_id, $summary, $type_id, $task_comment, $status_id, $asset_id, $uuid);
+modifyInfo($dbo, $user_id, $summary, $type_id, $task_comment, $status_id, $asset_id, $assignee_id, $uuid);
 if ($debug){
   echo var_dump($_GET);
 }

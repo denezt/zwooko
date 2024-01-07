@@ -23,6 +23,9 @@ select ("Loading Task Status Table...") as '';
 source tables/task_status.sql;
 select ("Loading Task Table...") as '';
 source tables/task.sql;
+select ("Loading Log Manager...") as '';
+source tables/logging.sql;
+
 
 -- Load All Database views
 select ("Loading Task Queue Table...") as '';

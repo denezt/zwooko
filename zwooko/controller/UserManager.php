@@ -1,6 +1,6 @@
 <?php
 
-class Asset {
+class UserManager {
     private $name = array();
     private $dbObject;
 
@@ -8,8 +8,8 @@ class Asset {
       $this->dbObject = $dbo;
     }
 
-    function getAssetName(){
-      $sql = "select * from asset";
+    function getAllUsers(){
+      $sql = "select * from user";
       $dbo = $this->dbObject;
       $query_result = $dbo->prepare($sql);
       $query_result->execute();

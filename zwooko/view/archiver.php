@@ -20,8 +20,8 @@ $taskInfo->extractTaskTableData($dbo);
             <div class="shadow-sm p-3 mb-5 bg-body-tertiary rounded">
                 <ul class="list-group">
                 <?php
-                    echo '<li class="list-group-item list-group-item-danger">Do you want to archive task?</li>';  
-                    echo '<li class="list-group-item list-group-item-danger">Task Name: ' . $taskInfo->getTaskName() . '</li>';  
+                    echo '<li class="list-group-item list-group-item-secondary">Do you want to archive task?</li>';
+                    echo '<li class="list-group-item list-group-item-secondary"><span class="d-inline-block text-truncate" style="max-width: 550px;">Task Name: ' . $taskInfo->getTaskName() . '</span></li>';  
                 ?>
                 </ul>
             </div>

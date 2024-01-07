@@ -5,7 +5,6 @@ $page_name = "home";
 include("controller/PageInfo.php");
 include("controller/Router.php");
 include("model/configuration.php");
-include("model/router_list.php");
 include("view/navigator.php");
 
 $pageTitle = (ucfirst($_GET["route"])) ? ucfirst($_GET["route"]) : "Main";
@@ -64,7 +63,9 @@ $route = (ucfirst($_GET["route"])) ? ucfirst($_GET["route"]) : "Main";
                     <?php
                         $_route = explode("_", $route);
                         $_route = implode(" ", $_route);
-                        echo "Application: " . $_route . "<br/>"; 
+                        if ($config["app"]["debug"]){
+                            echo "Application: " . $_route . "<br/>"; 
+                        }
                     ?></h5>
                     <?php if ($logged_in == false){ ?>
                         <button type="button" onClick="openLoginScreen();" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">Log into Server</button>

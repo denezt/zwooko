@@ -8,6 +8,7 @@ class TaskInfo {
     private $status_id;
     private $asset_id;
     private $user_id;
+    private $assignee_id;
     private $priority_id;
 
     /**
@@ -19,13 +20,14 @@ class TaskInfo {
     }
 
     // Here we set all of the class variables
-    function setTaskInfo($name, $type_id, $description, $status_id, $asset_id, $user_id, $priority_id){
+    function setTaskInfo($name, $type_id, $description, $status_id, $asset_id, $user_id, $assignee_id, $priority_id){
         $this->name = $name;
         $this->type_id = $type_id;
         $this->description = $description;
         $this->status_id = $status_id;
         $this->asset_id = $asset_id;
         $this->user_id = $user_id;
+        $this->assignee_id = $assignee_id;
         $this->priority_id = $priority_id;
     }
 
@@ -54,6 +56,10 @@ class TaskInfo {
         return "$this->user_id";
     }
 
+    function getTaskAssigneeId(){
+        return "$this->assignee_id";
+    }
+
     function getTaskPriority(){
         return "$this->priority";
     }
@@ -71,9 +77,10 @@ class TaskInfo {
             $status_id = $rs["status_id"];      // Status ID
             $asset_id = $rs["asset_id"];        // Asset ID
             $user_id = $rs["user_id"];          // User ID
+            $assignee_id = $rs["assignee_id"];  // Assignee ID
             $priority_id = $rs["priority_id"];  // Priority ID
         }
-        $this->setTaskInfo($task_name, $type_id, $description, $status_id, $asset_id, $user_id, $priority_id);
+        $this->setTaskInfo($task_name, $type_id, $description, $status_id, $asset_id, $user_id, $assignee_id, $priority_id);
     }
 
     function getTaskTableData(){
@@ -84,6 +91,7 @@ class TaskInfo {
         $status_id =  $this->status_id;
         $asset_id = $this->asset_id;
         $user_id = $this->user_id;
+        $assignee_id = $this->assignee_id;
         $priority_id = $this->priority_id;
         $tableData = array(
             "task_name" => $task_name,
@@ -93,6 +101,7 @@ class TaskInfo {
             "status_id" =>  $status_id,
             "asset_id" => $asset_id,
             "user_id" => $user_id,
+            "assignee_id" => $assignee_id,
             "priority_id" => $priority_id
         );
         return $tableData;

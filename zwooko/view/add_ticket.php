@@ -9,6 +9,9 @@ $dbo = new DataBaseConnector();
 include("controller/Asset.php"); 
 $asset = new Asset($dbo);
 
+include("controller/UserManager.php"); 
+$userMgr = new UserManager($dbo);
+
 // Load the AccountInfo Object code
 include("controller/AccountInfo.php");
 $accountInfo = new AccountInfo();
@@ -23,10 +26,24 @@ $username = $accountInfo->getUsername();
 			<input name="task_id" type="text" class="form-control" placeholder="Task ID" aria-label="TaskId"
 			aria-describedby="basic-addon1" value=<?php echo $uuid;?> readonly>
 		</div>
-		<!-- Username -->
+		<!-- Task Creator -->
 		<div class="input-group mb-3">
-  			<span class="input-group-text" id="basic-addon2">Name:</span>
+  			<span class="input-group-text" id="basic-addon2">Creator:</span>
   			<input name="username" type="text" class="form-control" placeholder="Username" aria-label="Recipient's username" aria-describedby="basic-addon2" value=<?php echo $username; ?> readonly>
+		</div>
+
+		<!-- Task Assignee -->
+		<div class="mb-3">
+			<div class="input-group">
+				<span class="input-group-text">Assignee:</span>
+				<select name="assignee_id" class="form-select" aria-label="Default select example">
+				<?php
+					foreach ($userMgr->getAllUsers() as $val){
+						echo "<option value='". $val['id']. "'>".$val['name']."</option>";
+					}	
+				?>
+				</select>
+			</div>
 		</div>
 
 		<!-- Product -->

@@ -10,6 +10,9 @@ $taskInfo = new TaskInfo($uuid);
 $taskInfo->extractTaskTableData($dbo);
 $taskTableData = $taskInfo->getTaskTableData();
 
+include("controller/UserManager.php");
+$userMgr = new UserManager($dbo);
+
 // Load the AccountInfo Object code
 include("controller/AccountInfo.php");
 $accountInfo = new AccountInfo();
@@ -33,6 +36,22 @@ $is_uuid_present = (!empty($uuid)) ? true : false;
             <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Recipient's username" 
             aria-describedby="basic-addon2" value=<?php echo $username; ?> readonly>
         </div>
+		
+        <!-- Task Assignee -->
+		<div class="mb-3">
+			<div class="input-group">
+				<span class="input-group-text">Assignee:</span>
+				<select name="assignee_id" class="form-select" aria-label="Default select example">
+				<?php
+                    $currentAssignee = $taskInfo->getTaskAssigneeId();
+					foreach ($userMgr->getAllUsers() as $assignee){
+                        $selected = ($assignee['id'] == $currentAssignee) ? "selected" : " ";
+						echo "<option value='". $assignee['id']. "' $selected>".$assignee['name']."</option>";
+					}	
+				?>
+				</select>
+			</div>
+		</div>
 
         <!-- Product -->
 		<div class="mb-3">
