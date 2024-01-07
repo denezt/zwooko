@@ -62,10 +62,12 @@
 		</script>
 	</head>
 	<body onload="updateProgressBar();">
-		<div id="content">
-			<span class='loading-message'>Loading, Queue...</span>
-			<div class="progress queue-progress" role="progressbar" aria-label="Success striped example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-				<div id="progress-bar" class="progress-bar progress-bar-striped bg-success"></div>
+		<div class="main-container">
+			<div id="content">
+				<span class='loading-message'>Loading, Queue...</span>
+				<div class="progress queue-progress" role="progressbar" aria-label="Success striped example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+					<div id="progress-bar" class="progress-bar progress-bar-striped bg-success"></div>
+				</div>
 			</div>
 		</div>
 	</body>

@@ -58,6 +58,10 @@ body {
     height: 100vh; /* Full height of the viewport */
 }
 
+.main-container {
+    width: 80%;
+}
+
 .content {
     /* Your content styles */
 }
