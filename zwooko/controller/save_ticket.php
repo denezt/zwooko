@@ -2,6 +2,10 @@
 $debug = false;
 include("../model/configuration.php");
 include("../model/database.php");
+include("AccountInfo.php");
+include("UuidManager.php");
+include("LogManager.php");
+
 
 function saveInfo($dbo, $user_id, $summary, $task_type, $task_id, $task_comment, $status_id, $asset_id, $assignee_id, $priority_id){
   $commentArr = explode(" ",$task_comment);
@@ -13,9 +17,9 @@ function saveInfo($dbo, $user_id, $summary, $task_type, $task_id, $task_comment,
 }
 
 function getUserId($dbo, $username){
-  $sql = "SELECT id FROM `user` WHERE name = ?";
+  $sql = "SELECT id FROM `user` WHERE name = :username";
   $stmt = $dbo->prepare($sql);
-  $stmt->execute([$username]);
+  $stmt->execute(array('username' => $username));
   return $stmt->fetchColumn();
 }
 
@@ -31,9 +35,21 @@ $status_id = $_GET["status"];
 $assignee_id = $_GET["assignee_id"];
 $product_id = $_GET["product"];
 
+$uuidMgr = new UuidManager();
+$uuidMgr->generateUUID();
+$uuid = $uuidMgr->getUUID();
+$dbo = new DataBaseConnector();
+$logManager = new LogManager();
+$accountInfo = new AccountInfo();
+
 // Extract User ID from Database
 // Save task to database
 saveInfo($dbo, $user_id, $summary, $task_type, $task_id, $task_comment, $status_id, $product_id, $assignee_id, $task_priority);
+$message = "User " . $accountInfo->getUsername() . " Adding new Task";
+$logTypeId = $logManager->getLogType($dbo, "info");
+$logManager->addLogEntry($dbo, $user_id, $uuid, $message, $logTypeId);
+
+
 if ($debug){
   echo var_dump($_GET);
 } 

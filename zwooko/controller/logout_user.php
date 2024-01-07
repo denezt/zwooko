@@ -1,5 +1,20 @@
 <?php 
 session_start();
+include("../model/database.php");
+include("AccountInfo.php");
+include("UuidManager.php");
+include("LogManager.php");
+
+$uuidMgr = new UuidManager();
+$uuidMgr->generateUUID();
+$uuid = $uuidMgr->getUUID();
+$dbo = new DataBaseConnector();
+$logManager = new LogManager();
+$accountInfo = new AccountInfo();
+$user_id = $accountInfo->getId();
+$message = "User " . $accountInfo->getUsername() . " Logged out";
+$logTypeId = $logManager->getLogType($dbo, "info");
+$logManager->addLogEntry($dbo, $user_id, $uuid, $message, $logTypeId);
 $_SESSION = array();
 session_destroy();
 ?>
