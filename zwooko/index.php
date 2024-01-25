@@ -4,6 +4,7 @@ $logged_in = $_SESSION["logged_in"];
 $page_name = "home";
 include("controller/PageInfo.php");
 include("controller/Router.php");
+include("controller/SidebarNavigator.php");
 include("model/configuration.php");
 include("view/navigator.php");
 
@@ -35,17 +36,26 @@ $route = (ucfirst($_GET["route"])) ? ucfirst($_GET["route"]) : "Main";
                 <a id="app-logo" href="/?route=dashboard" ><?php echo $config["app"]["name"]; ?></a>
             </div>
             <div id="app-logo" class="list-group list-group-flush">
-                <?php if ($logged_in == true){ ?>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=dashboard">Dashboard</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=tasks">Task Management</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=queue">Queue</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=archives">Recently Archived</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=search_archives">Search Archives</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=profile">Profile</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="controller/logout_user.php">Log Out</a>
-                <?php } else { ?>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="view/login.php">Login</a>
-                <?php } ?>
+                <?php if ($logged_in == true){
+                    // Add new elements to Side Navigation Bar
+                    $arrList = [ 
+                        "?route=dashboard" => "Dashboard", 
+                        "?route=tasks" => "Task Management",
+                        "?route=queue" => "Queue",
+                        "?route=archives" => "Recently Archived",
+                        "?route=search_archives" => "Search Archives",
+                        "?route=project_settings" => "Project Settings",
+                        "?route=profile" => "Profile",
+                        "controller/logout_user.php" => "Log Out",
+                    ];
+                    $sbNavMain = new SidebarNavigator($arrList);
+                    $sbNavMain->displayNavData();
+                } else {
+                    $arrList = [ "view/login.php" => "Login" ];
+                    $sbNavLogin = new SidebarNavigator($arrList);
+                    $sbNavLogin->displayNavData();
+                } 
+                ?>
 	        </div>
         </div>
         <!-- Page content wrapper -->

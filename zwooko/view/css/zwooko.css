@@ -14,6 +14,7 @@ body {
 }
 
 .ticket-container {
+    margin-top: 5%;
     width: 80%;
 }
 
@@ -56,6 +57,10 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh; /* Full height of the viewport */
+}
+
+.main-container {
+    width: 80%;
 }
 
 .content {

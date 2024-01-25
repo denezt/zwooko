@@ -2,6 +2,9 @@
 $debug = false;
 include("../model/configuration.php");
 include("../model/database.php");
+include("AccountInfo.php");
+include("UuidManager.php");
+include("LogManager.php");
 
 function modifyInfo($dbo, $user_id, $summary, $type_id, $task_comment, $status_id, $asset_id, $assignee_id, $uuid){
   // Get system time
@@ -36,6 +39,19 @@ $assignee_id = $_GET["assignee_id"];
 // Extract User ID from Database
 // Save task to database
 modifyInfo($dbo, $user_id, $summary, $type_id, $task_comment, $status_id, $asset_id, $assignee_id, $uuid);
+
+// Create Log Entry
+$uuidMgr = new UuidManager();
+$uuidMgr->generateUUID();
+$uuid = $uuidMgr->getUUID();
+$logManager = new LogManager();
+$accountInfo = new AccountInfo();
+$user_id = $accountInfo->getId();
+$message = "User " . $accountInfo->getUsername() . " Modified Task";
+$logTypeId = $logManager->getLogType($dbo, "info");
+$logManager->addLogEntry($dbo, $user_id, $uuid, $message, $logTypeId);
+
+
 if ($debug){
   echo var_dump($_GET);
 }

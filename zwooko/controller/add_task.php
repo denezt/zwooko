@@ -1,9 +1,16 @@
 <?php
 include("../model/database.php");
 include("../controller/AccountInfo.php");
-$dbo = new DataBaseConnector();
-$accountInfo = new AccountInfo();
+include("../controller/UuidManager.php");
+include("../controller/LogManager.php");
 
+$uuidMgr = new UuidManager();
+$uuidMgr->generateUUID();
+$uuid = $uuidMgr->getUUID();
+$dbo = new DataBaseConnector();
+$logManager = new LogManager();
+
+$accountInfo = new AccountInfo();
 $user_id = $accountInfo->getId();
 $asset = $_POST["product"];
 $id = $_POST["id"];
@@ -18,9 +25,14 @@ try {
   $query .= "values (?, ?, ?, ?, ?, ?, ?)";
   $stmt = $dbo->prepare($sql);
   $stmt->execute([$summary, $type_id, $task_id, $task_comment, $status_id, $asset_id, $user_id]);
+  $message = "User " . $accountInfo->getUsername() . "Adding new Task";
+  $logTypeId = $logManager->getLogType($dbo, "info");
+  $logManager->addLogEntry($dbo, $user_id, $uuid, $message, $logTypeId);
 } catch (PDOException $ex) {
-    // echo "Error: ". $ex->getMessage() . "<br />";
-    die("Problem accessing database!");
+  // echo "Error: ". $ex->getMessage() . "<br />";
+  $logTypeId = $logManager->getLogType($dbo, "error");
+  $logManager->addLogEntry($dbo, $user_id, $uuid, $ex->getMessage(), $logTypeId);
+  die("Problem accessing database!");
 }
 
 ?>
