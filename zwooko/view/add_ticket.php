@@ -17,7 +17,7 @@ include("controller/AccountInfo.php");
 $accountInfo = new AccountInfo();
 $username = $accountInfo->getUsername();
 ?>
-
+<h5>Add New Entry</h5>
 <div class="ticket-container">
 	<form method="get" action="controller/save_ticket.php">
 		<div class="container text-center">
