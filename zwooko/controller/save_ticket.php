@@ -7,13 +7,13 @@ include("UuidManager.php");
 include("LogManager.php");
 
 
-function saveInfo($dbo, $user_id, $summary, $task_type, $task_id, $task_comment, $status_id, $asset_id, $assignee_id, $priority_id){
+function saveInfo($dbo, $user_id, $summary, $task_type, $task_id, $task_comment, $status_id, $asset_id, $assignee_id, $priority_id, $start_date, $due_date){
   $commentArr = explode(" ",$task_comment);
   $task_comment = (count($commentArr) < 1) ? "empty" : $task_comment;
-  $sql = "INSERT INTO `task` (`name`, `type_id`, `uuid`, `description`, `status_id`, `asset_id`, `user_id`,`assignee_id`, `priority_id`) ";
-  $sql .= "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  $sql = "INSERT INTO `task` (`name`, `type_id`, `uuid`, `description`, `status_id`, `asset_id`, `user_id`,`assignee_id`, `priority_id`,`start_date`,`due_date`) ";
+  $sql .= "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
   $stmt = $dbo->prepare($sql);
-  $stmt->execute([$summary, $task_type, $task_id, "$task_comment", $status_id, $asset_id, $user_id, $assignee_id, $priority_id]);
+  $stmt->execute([$summary, $task_type, $task_id, "$task_comment", $status_id, $asset_id, $user_id, $assignee_id, $priority_id, $start_date, $due_date]);
 }
 
 function getUserId($dbo, $username){
@@ -24,16 +24,18 @@ function getUserId($dbo, $username){
 }
 
 $dbo = new DataBaseConnector();
-$username = $_GET["username"];
+$username = $_POST["username"];
 $user_id = getUserId($dbo, $username);
-$summary = $_GET["summary"];
-$task_type = $_GET["task_type"];
-$task_id = $_GET["task_id"];
-$task_comment = $_GET["task_comment"];
-$task_priority = $_GET["task_priority"];
-$status_id = $_GET["status"];
-$assignee_id = $_GET["assignee_id"];
-$product_id = $_GET["product"];
+$summary = $_POST["summary"];
+$task_type = $_POST["task_type"];
+$task_id = $_POST["task_id"];
+$task_comment = $_POST["task_comment"];
+$task_priority = $_POST["task_priority"];
+$status_id = $_POST["status"];
+$assignee_id = $_POST["assignee_id"];
+$product_id = $_POST["product"];
+$start_date = (!empty($_POST["start_date"])) ? $_POST["start_date"] : " ";
+$due_date = (!empty($_POST["due_date"])) ? $_POST["due_date"] : " " ;
 
 $uuidMgr = new UuidManager();
 $uuidMgr->generateUUID();
@@ -44,14 +46,14 @@ $accountInfo = new AccountInfo();
 
 // Extract User ID from Database
 // Save task to database
-saveInfo($dbo, $user_id, $summary, $task_type, $task_id, $task_comment, $status_id, $product_id, $assignee_id, $task_priority);
+saveInfo($dbo, $user_id, $summary, $task_type, $task_id, $task_comment, $status_id, $product_id, $assignee_id, $task_priority, $start_date, $due_date);
 $message = "User " . $accountInfo->getUsername() . " Adding new Task";
 $logTypeId = $logManager->getLogType($dbo, "info");
 $logManager->addLogEntry($dbo, $user_id, $uuid, $message, $logTypeId);
 
 
 if ($debug){
-  echo var_dump($_GET);
+  echo var_dump($_POST);
 } 
 
 ?>
@@ -89,7 +91,7 @@ if ($debug){
           <?php 
                 if (empty($login_username) || empty($login_password)):
                         echo "<h1>Successfully, Saved...</h1>";
-                        echo "Adding New Task: ". $_GET["summary"];
+                        echo "Adding New Task: ". $_POST["summary"];
                 endif; 
            ?>
         </center>

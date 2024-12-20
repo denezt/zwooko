@@ -6,10 +6,10 @@ include("model/database.php");
 // Create the PDO
 $dbo = new DataBaseConnector();
 
-include("controller/Asset.php"); 
+include("controller/Asset.php");
 $asset = new Asset($dbo);
 
-include("controller/UserManager.php"); 
+include("controller/UserManager.php");
 $userMgr = new UserManager($dbo);
 
 // Load the AccountInfo Object code
@@ -17,9 +17,24 @@ include("controller/AccountInfo.php");
 $accountInfo = new AccountInfo();
 $username = $accountInfo->getUsername();
 ?>
+<script>
+	function checkDate(){
+		let start_date = document.getElementById("start_date");
+		let due_date = document.getElementById("due_date");		
+		// alert(`Value[start_date]: ${start_date.value}, is_nan: ${isNaN(start_date.value)}, typeof: ${typeof(start_date.value)}`);
+		// alert(`Value[due_date]: ${due_date.value}, is_nan: ${isNaN(due_date.value)}, typeof: ${typeof(due_date.value)}`);
+		// Check if any value is missing
+		let dates_available = ((isNaN(start_date.value) == false) || (isNaN(due_date.value) == false)) ? false : true;
+		if (dates_available == false){
+			let a = (isNaN(start_date.value) == false) ? document.getElementById("start_date").focus() : " ";
+			alert("Error: Missing dates!");
+		}
+		return dates_available;
+	}
+</script>
 <h5>Add New Entry</h5>
 <div class="ticket-container">
-	<form method="get" action="controller/save_ticket.php">
+	<form method="post" onsubmit="return checkDate();" action="controller/save_ticket.php">	
 		<div class="container text-center">
 			<!-- Start First Row -->
 			<div class="row">
@@ -41,12 +56,38 @@ $username = $accountInfo->getUsername();
 					<div class="mb-3">
 						<div class="input-group mb-3">
 							<!-- <span class="input-group-text" id="basic-addon2">Summary:</span> -->
-							<input name="summary" type="text" class="form-control" placeholder="Summary" aria-label="Task Summary" aria-describedby="basic-addon2">
+							<input name="summary" type="text" class="form-control" placeholder="Summary" aria-label="Task Summary" aria-describedby="basic-addon2" required="true">
 						</div>
 					</div>
 				</div>
 			</div>
 			<!-- End Second Row -->
+			<!-- Start New Row A -->
+			<div class="row">
+				<div class="col">
+					<!-- Start Date -->
+					<div class="mb-6">
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon2">Start Date:</span>
+							<input id="start_date" name="start_date" type="date" class="form-control" aria-label="Start Date" 
+								aria-describedby="basic-addon2" value="<?php echo date("Y-m-d"); ?>">
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<!-- Due Date -->
+					<div class="mb-6">
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon2">Due Date:</span>
+							<input id="due_date" name="due_date" type="date" class="form-control" aria-label="Due Date" 
+								aria-describedby="basic-addon2" value="<?php echo date("Y-m-d"); ?>">
+						</div>
+					</div>
+				</div>		
+			</div>
+			<!-- End New Row A -->
+
+
 			<!-- Start Third Row -->
 			<div class="row">
 				<div class="col">
@@ -65,7 +106,7 @@ $username = $accountInfo->getUsername();
 							<?php
 								foreach ($userMgr->getAllUsers() as $val){
 									echo "<option value='". $val['id']. "'>".$val['name']."</option>";
-								}	
+								}
 							?>
 							</select>
 						</div>
@@ -84,7 +125,7 @@ $username = $accountInfo->getUsername();
 							<?php
 								foreach ($asset->getAssetName() as $val){
 									echo "<option value='". $val['id']. "'>".$val['name']."</option>";
-								}	
+								}
 							?>
 							</select>
 						</div>
@@ -97,7 +138,7 @@ $username = $accountInfo->getUsername();
 							<span class="input-group-text">Status:</span>
 							<select name="status" class="form-select" aria-label="Default select example">
 								<?php
-								include("task_status.php"); 
+								include("task_status.php");
 								$task_status = getTaskStatus($dbo);
 								$row_limit = count($task_status);
 								for ($row = 0; $row < $row_limit; $row++) {
@@ -108,7 +149,7 @@ $username = $accountInfo->getUsername();
 							</select>
 						</div>
 					</div>
-				</div>				
+				</div>
 			</div>
 			<!-- End Fourth Row -->
 			<!-- Start Fifth Row -->
@@ -116,7 +157,7 @@ $username = $accountInfo->getUsername();
 				<div class="col">
 					<!-- Task Type -->
 					<div class="mb-3">
-						<div class="input-group">				
+						<div class="input-group">
 						<span class="input-group-text">Type:</span>
 							<select name="task_type" class="form-select" aria-label="Default select example">
 								<?php
@@ -139,19 +180,19 @@ $username = $accountInfo->getUsername();
 						<div class="input-group">
 							<span class="input-group-text">Priority:</span>
 							<select name="task_priority" class="form-select" aria-label="Default select example">
-									<?php 
+									<?php
 									include("task_priorities.php");
-									$task_priority = getTaskPriority($dbo);										
+									$task_priority = getTaskPriority($dbo);
 									$row_limit = count($task_priority);
 									for ($row = 0; $row < $row_limit; $row++) {
-										$selected = ($task_priority[$row][0] == 1) ? "selected" : " ";											
+										$selected = ($task_priority[$row][0] == 1) ? "selected" : " ";
 										echo "<option value='". $task_priority[$row][0] ."'>". $task_priority[$row][1] ."</option>\n";
 									}
 									?>
 							</select>
 						</div>
 					</div>
-				</div>					
+				</div>
 			</div>
 			<!-- End Fifth Row -->
 			<!-- Start Sixth Row -->
@@ -160,19 +201,19 @@ $username = $accountInfo->getUsername();
 					<!-- Task Comments -->
 					<div class="input-group">
 						<span class="input-group-text">Task Comment</span>
-						<textarea name="task_comment" class="form-control" aria-label="Comment"></textarea>
+						<textarea name="task_comment" class="form-control" aria-label="Comment" required="true"></textarea>
 					</div>
 				</div>
-			</div>									
+			</div>
 			<!-- End Sixth Row -->
 			<!-- Start Seventh Row -->
 			<div class="row">
-				<div class="col">			
+				<div class="col">
 					<div id="task-confirm-btn" class="col-auto">
 						<button type="submit" class="btn btn-primary mb-3">Save</button>
 					</div>
 				</div>
-			</div>								
+			</div>
 			<!-- End Seventh Row -->
 		</div>
 	</form>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 include("controller/AccountInfo.php");
 include("controller/TaskInfo.php");
 include("model/database.php");
@@ -13,7 +13,9 @@ $taskInfo->extractTaskTableData($dbo);
 <!DOCTYPE html>
 <html>
     <head>
-    </head>        
+	<link href="css/styles.css" rel="stylesheet" />
+	<link href="css/zwooko.css" rel="stylesheet" />
+    </head>
     <body>
         <?php if ($accountInfo->getSessionState()): ?>
         <div class="container-fluid">
@@ -32,6 +34,6 @@ $taskInfo->extractTaskTableData($dbo);
             </form>
         </div>
         <?php endif; ?>
-    </body>        
+    </body>
 </html>
 

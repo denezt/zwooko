@@ -27,6 +27,7 @@ $route = (ucfirst($_GET["route"])) ? ucfirst($_GET["route"]) : "Main";
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS -->
     <script src="js/scripts.js"></script>
+    <script src="js/project_frontend.js"></script>
 </head>
 <body id="app-logo">
     <div class="d-flex terminal-bg" id="wrapper">
@@ -36,27 +37,35 @@ $route = (ucfirst($_GET["route"])) ? ucfirst($_GET["route"]) : "Main";
                 <a id="app-logo" href="/?route=dashboard" ><?php echo $config["app"]["name"]; ?></a>
             </div>
             <div id="app-logo" class="list-group list-group-flush">
-                <?php if ($logged_in == true){
+                <?php
+                if ($logged_in == true){
                     // Add new elements to Side Navigation Bar
-                    $arrList = [ 
-                        "?route=dashboard" => "Dashboard", 
+                    $arrList = [
+                        "?route=dashboard" => "Dashboard",
                         "?route=tasks" => "Task Management",
                         "?route=queue" => "Queue",
+                        "?route=backlog" => "Backlog",
                         "?route=archives" => "Recently Archived",
                         "?route=search_archives" => "Search Archives",
                         "?route=project_settings" => "Project Settings",
                         "?route=profile" => "Profile",
                         "controller/logout_user.php" => "Log Out",
                     ];
+                    $activate_route = strtolower($route);
+		            $route_request = "?route=" . $activate_route;
+
+                    // Remove the activate page from list
+                    // $arrList = array_diff($arrList, [$arrList[$route_request]]);
                     $sbNavMain = new SidebarNavigator($arrList);
-                    $sbNavMain->displayNavData();
+                    $sbNavMain->displayNavData($activate_route);
                 } else {
                     $arrList = [ "view/login.php" => "Login" ];
+                    $activate_route = "login";
                     $sbNavLogin = new SidebarNavigator($arrList);
-                    $sbNavLogin->displayNavData();
-                } 
+                    $sbNavLogin->displayNavData($activate_route);
+                }
                 ?>
-	        </div>
+	    </div>
         </div>
         <!-- Page content wrapper -->
         <div id="page-content-wrapper">
@@ -74,7 +83,7 @@ $route = (ucfirst($_GET["route"])) ? ucfirst($_GET["route"]) : "Main";
                         $_route = explode("_", $route);
                         $_route = implode(" ", $_route);
                         if ($config["app"]["debug"]){
-                            echo "Application: " . $_route . "<br/>"; 
+                            echo "Application: " . $_route . "<br/>";
                         }
                     ?></h5>
                     <?php if ($logged_in == false){ ?>
@@ -86,9 +95,8 @@ $route = (ucfirst($_GET["route"])) ? ucfirst($_GET["route"]) : "Main";
                         $route = $router->getRouter($currRoute);
                         include($config["app"][$route]);
                     ?>
-            </center>        
+            </center>
         </div>
     </div>
-    
 </body>
 </html>

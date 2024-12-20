@@ -18,13 +18,15 @@ $type = $_POST["type"];
 $name = $_POST["name"];
 $description = $_POST["description"];
 $status_id = $_POST["status_id"];
-
+$priority = $_POST["task_priority"];
+$start_date = $_POST["start_date"];
+$due_date = $_POST["due_date"];
 try {
   $query = "insert into task ";
-  $query .= "(`name`,`type_id`,`uuid`,`description`,`status_id`,`asset_id`,`user_id`) ";
-  $query .= "values (?, ?, ?, ?, ?, ?, ?)";
+  $query .= "(`name`,`type_id`,`uuid`,`description`,`status_id`,`asset_id`,`user_id`,`priority_id`,`start_date`,`due_date`) ";
+  $query .= "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
   $stmt = $dbo->prepare($sql);
-  $stmt->execute([$summary, $type_id, $task_id, $task_comment, $status_id, $asset_id, $user_id]);
+  $stmt->execute([$summary, $type_id, $task_id, $task_comment, $status_id, $asset_id, $user_id, $priority, $start_date, $due_date]);
   $message = "User " . $accountInfo->getUsername() . "Adding new Task";
   $logTypeId = $logManager->getLogType($dbo, "info");
   $logManager->addLogEntry($dbo, $user_id, $uuid, $message, $logTypeId);

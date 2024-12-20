@@ -32,3 +32,8 @@ CREATE TABLE `task` (
   CONSTRAINT `task_ibfk_5` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `task_ibfk_6` FOREIGN KEY (`assignee_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB CHARSET=latin1;
+
+-- Adding a start date for the task
+ALTER TABLE task ADD start_date datetime;
+-- Adding a start date for the task
+ALTER TABLE task ADD due_date datetime;

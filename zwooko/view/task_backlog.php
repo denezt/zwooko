@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes" />
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 		<link rel="stylesheet" href="view/css/styles.css">
 		<link rel="stylesheet" href="view/css/zwooko.css">
@@ -23,14 +24,14 @@
 			let timerSet1;
 			function changeProgressBar(new_progress){
 				let progressBar = document.getElementById("progress-bar");
-				if (new_progress <= 100){
+				if (update_progress < 100){
 					progressBar.style.width = `${new_progress}%`;
 				}
 			}
 
 			function updateProgressBar(){
 				if (update_progress <= 100){
-					timerSet1 = setInterval(function () {
+					timerSet1 = setInterval(function () {	
 						update_progress = update_progress+10;
 						changeProgressBar(update_progress);
 					}, 100);
@@ -46,19 +47,19 @@
 						document.getElementById("content").innerHTML = this.responseText;
 					}
 				};
-				xhttp.open("GET", "view/archive_screen.php", true);
+				xhttp.open("GET", "view/backlog_screen.php", true);
 				xhttp.send();
 			}
 			try {
-				clearInterval(timerSet2);
+				clearInterval(timerSet2);				
 			} catch (error) {
 				console.log(error.message);
 			}
-			timerSet2 = setInterval(function () {
+			timerSet2 = setInterval(function () {	
 				loadQueue();
-				console.log(`Updating, Queue: ${update_counter}`);
+				// console.log(`Updating, Queue: ${update_counter}`);
 				update_counter++;
-			}, 1500);
+			}, 1500);	
 		</script>
 	</head>
 	<body onload="updateProgressBar();">
