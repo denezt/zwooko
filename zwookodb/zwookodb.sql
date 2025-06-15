@@ -36,6 +36,9 @@ select ("Loading Task Count Table...") as '';
 source views/task_count.sql;
 select ("Loading Task Accomplished Table...") as '';
 source task_accomplished.sql;
+select ("Loading Task Backlog Table...") as '';
+source task_backlog.sql;
+
 
 -- Load all Database data
 select ("Loading Asset Data Table...") as '';
