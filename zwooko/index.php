@@ -4,6 +4,7 @@ $logged_in = $_SESSION["logged_in"];
 $page_name = "home";
 include("controller/PageInfo.php");
 include("controller/Router.php");
+include("controller/SidebarNavigator.php");
 include("model/configuration.php");
 include("view/navigator.php");
 
@@ -26,6 +27,7 @@ $route = (ucfirst($_GET["route"])) ? ucfirst($_GET["route"]) : "Main";
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS -->
     <script src="js/scripts.js"></script>
+    <script src="js/project_frontend.js"></script>
 </head>
 <body id="app-logo">
     <div class="d-flex terminal-bg" id="wrapper">
@@ -35,18 +37,35 @@ $route = (ucfirst($_GET["route"])) ? ucfirst($_GET["route"]) : "Main";
                 <a id="app-logo" href="/?route=dashboard" ><?php echo $config["app"]["name"]; ?></a>
             </div>
             <div id="app-logo" class="list-group list-group-flush">
-                <?php if ($logged_in == true){ ?>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=dashboard">Dashboard</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=tasks">Task Management</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=queue">Queue</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=archives">Recently Archived</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=search_archives">Search Archives</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="?route=profile">Profile</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="controller/logout_user.php">Log Out</a>
-                <?php } else { ?>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="view/login.php">Login</a>
-                <?php } ?>
-	        </div>
+                <?php
+                if ($logged_in == true){
+                    // Add new elements to Side Navigation Bar
+                    $arrList = [
+                        "?route=dashboard" => "Dashboard",
+                        "?route=tasks" => "Task Management",
+                        "?route=queue" => "Queue",
+                        "?route=backlog" => "Backlog",
+                        "?route=archives" => "Recently Archived",
+                        "?route=search_archives" => "Search Archives",
+                        "?route=project_settings" => "Project Settings",
+                        "?route=profile" => "Profile",
+                        "controller/logout_user.php" => "Log Out",
+                    ];
+                    $activate_route = strtolower($route);
+		            $route_request = "?route=" . $activate_route;
+
+                    // Remove the activate page from list
+                    // $arrList = array_diff($arrList, [$arrList[$route_request]]);
+                    $sbNavMain = new SidebarNavigator($arrList);
+                    $sbNavMain->displayNavData($activate_route);
+                } else {
+                    $arrList = [ "view/login.php" => "Login" ];
+                    $activate_route = "login";
+                    $sbNavLogin = new SidebarNavigator($arrList);
+                    $sbNavLogin->displayNavData($activate_route);
+                }
+                ?>
+	    </div>
         </div>
         <!-- Page content wrapper -->
         <div id="page-content-wrapper">
@@ -64,7 +83,7 @@ $route = (ucfirst($_GET["route"])) ? ucfirst($_GET["route"]) : "Main";
                         $_route = explode("_", $route);
                         $_route = implode(" ", $_route);
                         if ($config["app"]["debug"]){
-                            echo "Application: " . $_route . "<br/>"; 
+                            echo "Application: " . $_route . "<br/>";
                         }
                     ?></h5>
                     <?php if ($logged_in == false){ ?>
@@ -76,9 +95,8 @@ $route = (ucfirst($_GET["route"])) ? ucfirst($_GET["route"]) : "Main";
                         $route = $router->getRouter($currRoute);
                         include($config["app"][$route]);
                     ?>
-            </center>        
+            </center>
         </div>
     </div>
-    
 </body>
 </html>

@@ -6,10 +6,10 @@ include("model/database.php");
 // Create the PDO
 $dbo = new DataBaseConnector();
 
-include("controller/Asset.php"); 
+include("controller/Asset.php");
 $asset = new Asset($dbo);
 
-include("controller/UserManager.php"); 
+include("controller/UserManager.php");
 $userMgr = new UserManager($dbo);
 
 // Load the AccountInfo Object code
@@ -17,119 +17,204 @@ include("controller/AccountInfo.php");
 $accountInfo = new AccountInfo();
 $username = $accountInfo->getUsername();
 ?>
+<script>
+	function checkDate(){
+		let start_date = document.getElementById("start_date");
+		let due_date = document.getElementById("due_date");		
+		// alert(`Value[start_date]: ${start_date.value}, is_nan: ${isNaN(start_date.value)}, typeof: ${typeof(start_date.value)}`);
+		// alert(`Value[due_date]: ${due_date.value}, is_nan: ${isNaN(due_date.value)}, typeof: ${typeof(due_date.value)}`);
+		// Check if any value is missing
+		let dates_available = ((isNaN(start_date.value) == false) || (isNaN(due_date.value) == false)) ? false : true;
+		if (dates_available == false){
+			let a = (isNaN(start_date.value) == false) ? document.getElementById("start_date").focus() : " ";
+			alert("Error: Missing dates!");
+		}
+		return dates_available;
+	}
+</script>
+<h5>Add New Entry</h5>
 <div class="ticket-container">
-	<form method="get" action="controller/save_ticket.php">
-		<!-- User ID Information -->
-		<!-- div class="input-group mb-3" style="visibility: hidden;" -->
-		<div class="input-group mb-3">
-			<span class="input-group-text" id="basic-addon1">Task ID: </span>
-			<input name="task_id" type="text" class="form-control" placeholder="Task ID" aria-label="TaskId"
-			aria-describedby="basic-addon1" value=<?php echo $uuid;?> readonly>
-		</div>
-		<!-- Task Creator -->
-		<div class="input-group mb-3">
-  			<span class="input-group-text" id="basic-addon2">Creator:</span>
-  			<input name="username" type="text" class="form-control" placeholder="Username" aria-label="Recipient's username" aria-describedby="basic-addon2" value=<?php echo $username; ?> readonly>
-		</div>
-
-		<!-- Task Assignee -->
-		<div class="mb-3">
-			<div class="input-group">
-				<span class="input-group-text">Assignee:</span>
-				<select name="assignee_id" class="form-select" aria-label="Default select example">
-				<?php
-					foreach ($userMgr->getAllUsers() as $val){
-						echo "<option value='". $val['id']. "'>".$val['name']."</option>";
-					}	
-				?>
-				</select>
+	<form method="post" onsubmit="return checkDate();" action="controller/save_ticket.php">	
+		<div class="container text-center">
+			<!-- Start First Row -->
+			<div class="row">
+				<div class="col">
+					<!-- User ID Information -->
+					<!-- div class="input-group mb-3" style="visibility: hidden;" -->
+					<div class="input-group mb-3">
+						<span class="input-group-text" id="basic-addon1">Task ID: </span>
+						<input name="task_id" type="text" class="form-control" placeholder="Task ID" aria-label="TaskId"
+						aria-describedby="basic-addon1" value=<?php echo $uuid;?> readonly>
+					</div>
+				</div>
 			</div>
-		</div>
-
-		<!-- Product -->
-		<div class="mb-3">
-			<div class="input-group">
-				<span class="input-group-text">Product:</span>
-				<select name="product" class="form-select" aria-label="Default select example">
-				<?php
-					foreach ($asset->getAssetName() as $val){
-						echo "<option value='". $val['id']. "'>".$val['name']."</option>";
-					}	
-				?>
-				</select>
+			<!-- End First Row -->
+			<!-- Start Second Row -->
+			<div class="row">
+				<div class="col">
+					<!-- Summary -->
+					<div class="mb-3">
+						<div class="input-group mb-3">
+							<!-- <span class="input-group-text" id="basic-addon2">Summary:</span> -->
+							<input name="summary" type="text" class="form-control" placeholder="Summary" aria-label="Task Summary" aria-describedby="basic-addon2" required="true">
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
-
-		<!-- Status -->
-		<div class="mb-3">
- 			<div class="input-group">
-        	    <span class="input-group-text">Status:</span>
-				<select name="status" class="form-select" aria-label="Default select example">
-				<?php
-					include("task_status.php"); 
-					$task_status = getTaskStatus($dbo);
-					$row_limit = count($task_status);
-					for ($row = 0; $row < $row_limit; $row++) {
-						$selected = ($task_status[$row][0] == 1) ? "selected" : " ";
-						echo "<option value='". $task_status[$row][0] ."' $selected>". $task_status[$row][1] ."</option>\n";
-					}
-				?>
-				</select>
-  			</div>
-		</div>		
-	
-		<!-- Summary -->
-		<div class="mb-3">
-			<div class="input-group mb-3">
-				<span class="input-group-text" id="basic-addon2">Summary:</span>
-				<input name="summary" type="text" class="form-control" placeholder="Summary" aria-label="Task Summary" aria-describedby="basic-addon2">
+			<!-- End Second Row -->
+			<!-- Start New Row A -->
+			<div class="row">
+				<div class="col">
+					<!-- Start Date -->
+					<div class="mb-6">
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon2">Start Date:</span>
+							<input id="start_date" name="start_date" type="date" class="form-control" aria-label="Start Date" 
+								aria-describedby="basic-addon2" value="<?php echo date("Y-m-d"); ?>">
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<!-- Due Date -->
+					<div class="mb-6">
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon2">Due Date:</span>
+							<input id="due_date" name="due_date" type="date" class="form-control" aria-label="Due Date" 
+								aria-describedby="basic-addon2" value="<?php echo date("Y-m-d"); ?>">
+						</div>
+					</div>
+				</div>		
 			</div>
-		</div>
+			<!-- End New Row A -->
 
-		<!-- Task Type -->
-		<div class="mb-3">
- 			<div class="input-group">
-				
-			<span class="input-group-text">Type:</span>
-				<select name="task_type" class="form-select" aria-label="Default select example">
-					<?php
-					include("task_options.php");
-					$task_options = getTaskOption($dbo);
-					$row_limit = count($task_options);
-					for ($row = 0; $row < $row_limit; $row++) {
-						$selected = ($task_options[$row][0] == 1) ? "selected" : " ";
-						echo "<option value='". $task_options[$row][0] ."' $selected>". $task_options[$row][1] ."</option>\n";
-					}
-					?>
-				</select>
-  			</div>
-		</div>
 
-       		<!-- Task Priority -->
-                <div class="mb-3">
-                        <!-- label for="basic-url" class="form-label">Task Parameters:</label -->
-                        <div class="input-group">
-                                <span class="input-group-text">Priority:</span>
-                                <select name="task_priority" class="form-select" aria-label="Default select example">
-                                        <?php 
-										include("task_priorities.php");
-										$task_priority = getTaskPriority($dbo);										
-										$row_limit = count($task_priority);
-										for ($row = 0; $row < $row_limit; $row++) {
-											$selected = ($task_priority[$row][0] == 1) ? "selected" : " ";											
-											echo "<option value='". $task_priority[$row][0] ."'>". $task_priority[$row][1] ."</option>\n";
-										}
-										?>
-                                </select>
-                        </div>
-                </div>
-		<!-- Task Comments -->
-		<div class="input-group">
-			<span class="input-group-text">Task Comment</span>
-			<textarea name="task_comment" class="form-control" aria-label="Comment"></textarea>
-		</div>
-		<div id="task-confirm-btn" class="col-auto">
-			<button type="submit" class="btn btn-primary mb-3">Save</button>
+			<!-- Start Third Row -->
+			<div class="row">
+				<div class="col">
+					<!-- Task Creator -->
+					<div class="input-group mb-3">
+						<span class="input-group-text" id="basic-addon2">Creator:</span>
+						<input name="username" type="text" class="form-control" placeholder="Username" aria-label="Recipient's username" aria-describedby="basic-addon2" value=<?php echo $username; ?> readonly>
+					</div>
+				</div>
+				<div class="col">
+					<!-- Task Assignee -->
+					<div class="mb-3">
+						<div class="input-group">
+							<span class="input-group-text">Assignee:</span>
+							<select name="assignee_id" class="form-select" aria-label="Default select example">
+							<?php
+								foreach ($userMgr->getAllUsers() as $val){
+									echo "<option value='". $val['id']. "'>".$val['name']."</option>";
+								}
+							?>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Third Row -->
+			<!-- Start Fourth Row -->
+			<div class="row">
+				<div class="col">
+					<!-- Product -->
+					<div class="mb-3">
+						<div class="input-group">
+							<span class="input-group-text">Product:</span>
+							<select name="product" class="form-select" aria-label="Default select example">
+							<?php
+								foreach ($asset->getAssetName() as $val){
+									echo "<option value='". $val['id']. "'>".$val['name']."</option>";
+								}
+							?>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<!-- Status -->
+					<div class="mb-3">
+						<div class="input-group">
+							<span class="input-group-text">Status:</span>
+							<select name="status" class="form-select" aria-label="Default select example">
+								<?php
+								include("task_status.php");
+								$task_status = getTaskStatus($dbo);
+								$row_limit = count($task_status);
+								for ($row = 0; $row < $row_limit; $row++) {
+									$selected = ($task_status[$row][0] == 1) ? "selected" : " ";
+									echo "<option value='". $task_status[$row][0] ."' $selected>". $task_status[$row][1] ."</option>\n";
+								}
+								?>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Fourth Row -->
+			<!-- Start Fifth Row -->
+			<div class="row">
+				<div class="col">
+					<!-- Task Type -->
+					<div class="mb-3">
+						<div class="input-group">
+						<span class="input-group-text">Type:</span>
+							<select name="task_type" class="form-select" aria-label="Default select example">
+								<?php
+								include("task_options.php");
+								$task_options = getTaskOption($dbo);
+								$row_limit = count($task_options);
+								for ($row = 0; $row < $row_limit; $row++) {
+									$selected = ($task_options[$row][0] == 1) ? "selected" : " ";
+									echo "<option value='". $task_options[$row][0] ."' $selected>". $task_options[$row][1] ."</option>\n";
+								}
+								?>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<!-- Task Priority -->
+					<div class="mb-3">
+						<!-- label for="basic-url" class="form-label">Task Parameters:</label -->
+						<div class="input-group">
+							<span class="input-group-text">Priority:</span>
+							<select name="task_priority" class="form-select" aria-label="Default select example">
+									<?php
+									include("task_priorities.php");
+									$task_priority = getTaskPriority($dbo);
+									$row_limit = count($task_priority);
+									for ($row = 0; $row < $row_limit; $row++) {
+										$selected = ($task_priority[$row][0] == 1) ? "selected" : " ";
+										echo "<option value='". $task_priority[$row][0] ."'>". $task_priority[$row][1] ."</option>\n";
+									}
+									?>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Fifth Row -->
+			<!-- Start Sixth Row -->
+			<div class="row">
+				<div class="col">
+					<!-- Task Comments -->
+					<div class="input-group">
+						<span class="input-group-text">Task Comment</span>
+						<textarea name="task_comment" class="form-control" aria-label="Comment" required="true"></textarea>
+					</div>
+				</div>
+			</div>
+			<!-- End Sixth Row -->
+			<!-- Start Seventh Row -->
+			<div class="row">
+				<div class="col">
+					<div id="task-confirm-btn" class="col-auto">
+						<button type="submit" class="btn btn-primary mb-3">Save</button>
+					</div>
+				</div>
+			</div>
+			<!-- End Seventh Row -->
 		</div>
 	</form>
 </div>

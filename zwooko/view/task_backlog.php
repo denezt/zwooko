@@ -47,7 +47,7 @@
 						document.getElementById("content").innerHTML = this.responseText;
 					}
 				};
-				xhttp.open("GET", "view/queue_screen.php", true);
+				xhttp.open("GET", "view/backlog_screen.php", true);
 				xhttp.send();
 			}
 			try {

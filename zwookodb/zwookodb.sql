@@ -23,6 +23,8 @@ select ("Loading Task Status Table...") as '';
 source tables/task_status.sql;
 select ("Loading Task Table...") as '';
 source tables/task.sql;
+select ("Loading Logging Type Table...") as '';
+source tables/log_type.sql;
 select ("Loading Log Manager...") as '';
 source tables/logging.sql;
 

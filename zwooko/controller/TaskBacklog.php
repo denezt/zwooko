@@ -1,30 +1,22 @@
 <?php
 
-class TaskQueue {
+class TaskBacklog {
 	private $logged_in;
 	function __construct($logged_in){
 		$this->logged_in = $logged_in;
 	}
 
-	function getArchiveData($dbo){
-		$sql = "SELECT * FROM task_accomplished limit 10";
+	function getBacklogData($dbo){
+		$sql = "SELECT * FROM task_backlog";
 		$query_result = $dbo->prepare($sql);
 		$query_result->execute();
 		return $query_result->fetchAll();
 	}
 
-	function searchArchiveData($dbo, $term){
-		$sql = "SELECT * FROM task_accomplished where lower(description) like :search_term or lower(task_name) like :search_term";
+	function searchBacklogData($dbo, $term){
+		$sql = "SELECT * FROM task_backlog where lower(description) like :search_term or lower(task_name) like :search_term";
 		$query_result = $dbo->prepare($sql);
-		// $statement = $pdo->prepare("SELECT * FROM users WHERE vorname LIKE :vorname");
 		$query_result->execute(array('search_term' => "%$term%"));
-		return $query_result->fetchAll();
-	}
-
-	function getQueueData($dbo){
-		$sql = "SELECT * FROM task_queue limit 10";
-		$query_result = $dbo->prepare($sql);
-		$query_result->execute();
 		return $query_result->fetchAll();
 	}
 
@@ -37,7 +29,7 @@ class TaskQueue {
 		return $strResult;
 	}
 
-	function runTaskQueue($tableData){
+	function runTaskBacklog($tableData){
 		if ($this->logged_in == "true"):
 			echo  "<table id='dashboard-table' class='table table-striped table-hover'>";
 			echo  "<thead>";
@@ -75,8 +67,8 @@ class TaskQueue {
 		endif;
 	}
 
-	function scanQueue($queryLimit, $dbo, $current_user){
-		$sql = "select * from task_queue where employee = '". $current_user."' limit $queryLimit";
+	function scanBacklog($queryLimit, $dbo, $current_user){
+		$sql = "select * from task_backlog where employee = '". $current_user."' limit $queryLimit";
 		$tableData = array();
 		$item = 0;
 		foreach ($dbo->query($sql) as $rs){

@@ -14,6 +14,7 @@ body {
 }
 
 .ticket-container {
+    margin-top: 5%;
     width: 80%;
 }
 
@@ -58,6 +59,16 @@ body {
     height: 100vh; /* Full height of the viewport */
 }
 
+.main-container {
+    width: 80%;
+}
+
 .content {
     /* Your content styles */
+}
+
+/* Side Navi Selected */
+.selected {
+    background-color: black;
+    color: white;
 }

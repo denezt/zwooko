@@ -10,6 +10,8 @@ class TaskInfo {
     private $user_id;
     private $assignee_id;
     private $priority_id;
+    private $start_date;
+    private $due_date;
 
     /**
      * All Task Info is extracted using Unique Identification Number
@@ -20,7 +22,7 @@ class TaskInfo {
     }
 
     // Here we set all of the class variables
-    function setTaskInfo($name, $type_id, $description, $status_id, $asset_id, $user_id, $assignee_id, $priority_id){
+    function setTaskInfo($name, $type_id, $description, $status_id, $asset_id, $user_id, $assignee_id, $priority_id, $start_date, $due_date){
         $this->name = $name;
         $this->type_id = $type_id;
         $this->description = $description;
@@ -29,10 +31,16 @@ class TaskInfo {
         $this->user_id = $user_id;
         $this->assignee_id = $assignee_id;
         $this->priority_id = $priority_id;
+        $this->start_date = $start_date;
+        $this->due_date = $due_date;
+    }
+
+    function getTaskUuid(){
+        return $this->uuid;
     }
 
     function getTaskName(){
-        return "$this->name";
+        return $this->name;
     }
 
     function getTaskTypeId(){
@@ -41,27 +49,35 @@ class TaskInfo {
 
 
     function getTaskDescription(){
-        return "$this->description";
+        return $this->description;
     }
 
     function getTaskStatusId(){
-        return "$this->status_id";
+        return $this->status_id;
     }
 
     function getTaskAssetId(){
-        return "$this->asset_id";
+        return $this->asset_id;
     }
 
     function getTaskUserId(){
-        return "$this->user_id";
+        return $this->user_id;
     }
 
     function getTaskAssigneeId(){
-        return "$this->assignee_id";
+        return $this->assignee_id;
     }
 
-    function getTaskPriority(){
-        return "$this->priority";
+    function getTaskPriorityId(){
+        return $this->priority_id;
+    }
+
+    function getTaskStartDate(){
+        return $this->start_date;
+    }
+
+    function getTaskDueDate(){
+        return $this->due_date;
     }
 
     // Extract all task information and store
@@ -79,8 +95,10 @@ class TaskInfo {
             $user_id = $rs["user_id"];          // User ID
             $assignee_id = $rs["assignee_id"];  // Assignee ID
             $priority_id = $rs["priority_id"];  // Priority ID
+            $start_date = $rs["start_date"];  // Priority ID
+            $due_date = $rs["due_date"];  // Priority ID
         }
-        $this->setTaskInfo($task_name, $type_id, $description, $status_id, $asset_id, $user_id, $assignee_id, $priority_id);
+        $this->setTaskInfo($task_name, $type_id, $description, $status_id, $asset_id, $user_id, $assignee_id, $priority_id, $start_date, $due_date);
     }
 
     function getTaskTableData(){
@@ -93,6 +111,8 @@ class TaskInfo {
         $user_id = $this->user_id;
         $assignee_id = $this->assignee_id;
         $priority_id = $this->priority_id;
+        $start_date = $this->start_date;
+        $due_date = $this->due_date;
         $tableData = array(
             "task_name" => $task_name,
             "type_id" => $type_id,
@@ -102,7 +122,9 @@ class TaskInfo {
             "asset_id" => $asset_id,
             "user_id" => $user_id,
             "assignee_id" => $assignee_id,
-            "priority_id" => $priority_id
+            "priority_id" => $priority_id,
+            "start_date" => $start_date,
+            "due_date" => $due_date
         );
         return $tableData;
     }

@@ -30,13 +30,13 @@
 
 			function updateProgressBar(){
 				if (update_progress <= 100){
-					timerSet1 = setInterval(function () {	
+					timerSet1 = setInterval(function () {
 						update_progress = update_progress+10;
 						changeProgressBar(update_progress);
 					}, 100);
 				} else {
 					clearInterval(timerSet1);
-				}	
+				}
 			}
 
 			function loadQueue() {
@@ -50,11 +50,11 @@
 				xhttp.send();
 			}
 			try {
-				clearInterval(timerSet2);	
+				clearInterval(timerSet2);
 			} catch (error) {
 				console.log(error.message);
 			}
-			timerSet2 = setInterval(function () {	
+			timerSet2 = setInterval(function () {
 				loadQueue();
 				console.log(`Updating, Queue: ${update_counter}`);
 				update_counter++;
@@ -62,10 +62,12 @@
 		</script>
 	</head>
 	<body onload="updateProgressBar();">
-		<div id="content">
-			<span class='loading-message'>Loading, Queue...</span>
-			<div class="progress queue-progress" role="progressbar" aria-label="Success striped example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-				<div id="progress-bar" class="progress-bar progress-bar-striped bg-success"></div>
+		<div class="main-container">
+			<div id="content">
+				<span class='loading-message'>Loading, Queue...</span>
+				<div class="progress queue-progress" role="progressbar" aria-label="Success striped example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+					<div id="progress-bar" class="progress-bar progress-bar-striped bg-success"></div>
+				</div>
 			</div>
 		</div>
 	</body>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 $logged_in = $_SESSION["logged_in"];
 
@@ -10,8 +10,6 @@ if ($logged_in) {
     $taskQueue = new TaskQueue($logged_in);
     $tableData = $taskQueue->getArchiveData($dbo);
     echo $taskQueue->runTaskQueue($tableData);
-} else {
-    echo "<a href='login.php'>Login To Server</a>";
 }
 
 

@@ -4,7 +4,7 @@ session_start();
 $logged_in = $_SESSION["logged_in"];
 if ("true" == $logged_in){
 	include("add_ticket.php");
-} 
+}
 
 ?>
 <html>
