@@ -1,3 +1,21 @@
 <?php 
 
+$config["app"]["debug"] = False;
+
+$config["app"]["name"] = "Zwooko";
+$config["app"]["logo"] = "images/zwooko-002.png";
+
+# Routes
+$config["app"]["archives"] = "view/task_archives.php";
+$config["app"]["backlog"] = "view/task_backlog.php";
+$config["app"]["dashboard"] = "view/dashboard.php";
+$config["app"]["profile"] = "view/profile.php";
+$config["app"]["project_settings"] = "view/project_settings.php";
+$config["app"]["queue"] = "view/task_queue.php";
+$config["app"]["search_archives"] = "view/search_archives.php";
+$config["app"]["tasks"] = "view/task_management.php";
+$config["app"]["update_task"] = "view/update_task.php";
+
+
+
 ?>
