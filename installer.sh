@@ -1,4 +1,4 @@
 #!/bin/bash
 
 apt update -y
-apt install uuidgen -y
+apt install uuidgen certbot -y
